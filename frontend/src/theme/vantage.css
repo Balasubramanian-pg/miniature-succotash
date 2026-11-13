@@ -1,4 +1,3 @@
-/* [v1.0-scaffold] Baseline style tokens and CSS variables */
 /* Minimalist Precision Styles */
 @import url("tokens.css");
 @import url("base.css");
@@ -186,3 +185,84 @@
   margin: 0.8rem 0;
   font-size: 11px;
   font-family: var(--font-mono);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+}
+.markdown-rendered-body th {
+  background: var(--color-paper-2);
+  color: var(--color-muted);
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-rule);
+  font-weight: 500;
+}
+.markdown-rendered-body td {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink-2);
+}
+.markdown-rendered-body tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.markdown-rendered-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 2px 4px;
+  background: var(--color-paper-3);
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  color: var(--color-ink);
+}
+
+.markdown-rendered-body pre {
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  padding: 10px 12px;
+  border-radius: 3px;
+  overflow-x: auto;
+  margin: 0.6rem 0;
+}
+.markdown-rendered-body pre code {
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-ink);
+}
+
+.markdown-rendered-body ul, .markdown-rendered-body ol {
+  margin: 0.4rem 0;
+  padding-left: 1.2rem;
+  color: var(--color-ink-2);
+  line-height: 1.55;
+}
+
+.markdown-rendered-body hr {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: 1rem 0;
+}
+
+.markdown-rendered-body blockquote {
+  margin: 0.6rem 0;
+  padding: 4px 10px;
+  border-left: 2px solid var(--color-accent);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-muted);
+}
+
+.mermaid-diagram {
+  margin: 0.8rem 0;
+  padding: 12px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+.mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
