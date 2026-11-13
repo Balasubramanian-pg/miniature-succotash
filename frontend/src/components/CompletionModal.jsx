@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
 
@@ -174,3 +173,79 @@ export function CompletionModal({
           </div>
         </div>
 
+        {/* Clean Code Output Viewport */}
+        <div style={{
+          background: "#131417",
+          border: "1px solid var(--border-subtle)",
+          borderRadius: "var(--radius-sm)",
+          padding: "14px 16px",
+          maxHeight: "200px",
+          overflowY: "auto",
+          fontFamily: "var(--font-code)",
+          fontSize: "12px",
+          lineHeight: 1.6,
+          color: "var(--text-parchment)"
+        }}>
+          {codeLines.map((line, idx) => (
+            <div key={idx} style={{ display: "flex" }}>
+              <span style={{ width: "30px", color: "var(--text-dim)", userSelect: "none" }}>
+                {idx + 1}
+              </span>
+              <span style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+                {line}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Human Post-Mortem Question */}
+        <div style={{ marginTop: "16px" }}>
+          <label style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", marginBottom: "6px" }}>
+            💡 What caught you off guard on this problem? (1 sentence for future recall)
+          </label>
+          <input
+            type="text"
+            value={reflectionNote}
+            onChange={(e) => setReflectionNote(e.target.value)}
+            onKeyDown={(e) => {
+              const isWordEnd = e.key === " " || e.key === "Enter";
+              soundEngine.playKeyClick(isWordEnd);
+            }}
+            placeholder="e.g. Remember to cast conversions to FLOAT before division to prevent integer truncation..."
+            style={{
+              width: "100%",
+              background: "var(--bg-input)",
+              border: "1px solid var(--border-subtle)",
+              borderRadius: "var(--radius-sm)",
+              padding: "8px 12px",
+              color: "var(--text-parchment)",
+              fontFamily: "var(--font-body)",
+              fontSize: "12px",
+              outline: "none"
+            }}
+          />
+        </div>
+
+        {/* Action Controls */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "18px" }}>
+          <button
+            onClick={onClose}
+            className="earth-btn"
+          >
+            Review Problem Spec
+          </button>
+
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              onClick={handleSaveReflection}
+              className="earth-btn earth-btn-primary"
+            >
+              {noteSaved ? "Saved! Loading Next..." : "Save Note & Next Problem →"}
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
