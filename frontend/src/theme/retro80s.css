@@ -1,0 +1,463 @@
+/* [v1.0-scaffold] Baseline style tokens and CSS variables */
+/* ==========================================================================
+   1980s Anime Cyberpunk & Retro Terminal Design System (昭和・平成初期レトロ未来)
+   Inspired by Akira, Bubblegum Crisis, Evangelion MAGI, and 80s PC-9801 Terminals
+   ========================================================================== */
+
+:root {
+  /* Midnight Cyber Palette */
+  --anime-bg-deep: #07080f;
+  --anime-bg-base: #0b0d18;
+  --anime-bg-panel: #111528;
+  --anime-bg-panel-hover: #191f3a;
+  --anime-bg-glass: rgba(17, 21, 40, 0.85);
+
+  /* 80s Anime Neon Accents */
+  --neon-cyan: #00f0ff;
+  --neon-cyan-dim: rgba(0, 240, 255, 0.18);
+  --neon-pink: #ff2a6d;
+  --neon-pink-dim: rgba(255, 42, 109, 0.2);
+  --neon-amber: #ffb703;
+  --neon-amber-dim: rgba(255, 183, 3, 0.2);
+  --neon-green: #05ffa1;
+  --neon-purple: #9d4edd;
+
+  /* Typography Colors */
+  --anime-text-bright: #ffffff;
+  --anime-text-main: #d8e2fd;
+  --anime-text-muted: #6b7a9e;
+  --anime-text-dim: #444f6f;
+
+  /* Borders & Grid */
+  --border-mecha: #222b4c;
+  --border-mecha-active: #00f0ff;
+  --grid-line: rgba(0, 240, 255, 0.07);
+
+  /* Fonts */
+  --font-anime: 'Orbitron', 'Silkscreen', sans-serif;
+  --font-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  --font-pixel: 'Silkscreen', 'Press Start 2P', monospace;
+  --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--anime-bg-base);
+  color: var(--anime-text-main);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(0, 240, 255, 0.05) 0%, transparent 60%),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(0deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Subtle CRT Scanline Filter */
+.crt-scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(18, 16, 38, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  opacity: 0.55;
+}
+
+/* 80s Anime Top Navigation Bar */
+.anime-nav {
+  height: 52px;
+  background: var(--anime-bg-deep);
+  border-bottom: 2px solid var(--border-mecha);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.anime-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.anime-logo {
+  font-family: var(--font-anime);
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+
+.anime-kanji {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--neon-pink);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.anime-tag-pill {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  background: var(--anime-bg-panel);
+  border: 1px solid var(--border-mecha);
+  color: var(--neon-amber);
+  padding: 2px 6px;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+/* Nav Tab Switches */
+.anime-nav-tabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.anime-nav-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--anime-text-muted);
+  font-family: var(--font-anime);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.anime-nav-tab:hover {
+  color: var(--anime-text-bright);
+  background: var(--anime-bg-panel);
+  border-color: var(--border-mecha);
+}
+
+.anime-nav-tab.active {
+  color: var(--neon-cyan);
+  background: var(--neon-cyan-dim);
+  border-color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+.anime-nav-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+}
+
+/* Nav Actions Right */
+.anime-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.anime-rec-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--neon-pink);
+  background: var(--neon-pink-dim);
+  border: 1px solid var(--neon-pink);
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+}
+
+.rec-blinking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-pink);
+  box-shadow: 0 0 8px var(--neon-pink);
+  animation: recBlink 1s infinite alternate;
+}
+
+@keyframes recBlink {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.anime-action-btn {
+  background: var(--anime-bg-panel);
+  border: 1px solid var(--border-mecha);
+  color: var(--anime-text-main);
+  padding: 5px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.anime-action-btn:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan-dim);
+}
+
+/* Mecha Corner Bracket Cards */
+.mecha-card {
+  background: var(--anime-bg-panel);
+  border: 1px solid var(--border-mecha);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.mecha-card::before,
+.mecha-card::after {
+  content: "+";
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--neon-cyan);
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.mecha-card::before {
+  top: 3px;
+  left: 4px;
+}
+
+.mecha-card::after {
+  bottom: 3px;
+  right: 4px;
+}
+
+/* 80s Anime Corporate Ladder (Mecha Pilot Tech-Tree) */
+.ladder-root {
+  min-height: calc(100vh - 52px - 64px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 80px 50px;
+}
+
+.ladder-canvas-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.anime-ladder-node {
+  background: var(--anime-bg-panel);
+  border: 1px solid var(--border-mecha);
+  padding: 10px 18px;
+  min-width: 150px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+}
+
+.anime-ladder-node:hover {
+  background: var(--anime-bg-panel-hover);
+  border-color: var(--neon-cyan);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 16px var(--neon-cyan-dim);
+}
+
+.anime-ladder-node.active-tier {
+  border-color: var(--neon-amber);
+  box-shadow: 0 0 20px var(--neon-amber-dim);
+}
+
+.node-title-main {
+  font-family: var(--font-anime);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--anime-text-bright);
+}
+
+.node-title-kanji {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--neon-pink);
+  margin-top: 1px;
+  letter-spacing: 0.1em;
+}
+
+.node-progress-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--neon-cyan);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 2px;
+  padding: 1px 6px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* 80s Anime Pilot HUD (Bottom Left) */
+.anime-pilot-hud {
+  position: fixed;
+  bottom: 80px;
+  left: 54px;
+  background: var(--anime-bg-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-mecha);
+  border-left: 3px solid var(--neon-cyan);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 85;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.pilot-avatar-frame {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: var(--anime-bg-deep);
+  border: 1px solid var(--neon-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px var(--neon-cyan-dim);
+}
+
+.pilot-data-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.pilot-callsign {
+  font-family: var(--font-anime);
+  font-size: 11px;
+  color: var(--neon-cyan);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.pilot-credits {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--anime-text-bright);
+}
+
+.pilot-credits span {
+  font-size: 10px;
+  color: var(--neon-green);
+  margin-left: 4px;
+}
+
+.pilot-sync {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--neon-pink);
+}
+
+/* Left Vertical Bar (frame_0052 in 80s Mecha Style) */
+.anime-vertical-bar {
+  position: fixed;
+  left: 0;
+  top: 52px;
+  bottom: 0;
+  width: 38px;
+  background: var(--anime-bg-deep);
+  border-right: 1px solid var(--border-mecha);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 50px;
+  gap: 70px;
+  z-index: 90;
+}
+
+.anime-vertical-btn {
+  background: transparent;
+  border: none;
+  color: var(--anime-text-muted);
+  font-family: var(--font-anime);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.anime-vertical-btn:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan);
+}
+
+/* 80s Anime LeetCode Workspace */
+.anime-workspace-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  height: calc(100vh - 52px - 64px);
+  background: var(--anime-bg-base);
+  overflow: hidden;
+}
+
+.anime-spec-pane {
+  background: var(--anime-bg-deep);
+  border-right: 1px solid var(--border-mecha);
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.anime-terminal-header {
+  font-family: var(--font-anime);
+  font-size: 10px;
+  color: var(--neon-cyan);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-mecha);
+  padding-bottom: 6px;
+}
+
+.anime-spec-title {
+  font-family: var(--font-anime);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--anime-text-bright);
+  margin: 0;
+  line-height: 1.3;
+}
