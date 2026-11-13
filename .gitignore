@@ -1,5 +1,48 @@
+# Dependencies
 node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production Build
 dist/
+build/
+
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# DuckDB / SQLite local databases if any
+*.duckdb
+*.db
+
+# Vite & IDE
 .vite/
-*.pyc
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Large / Temp Assets
+video_sample.mp4
+video_frames/
+typing_raw.mp3
+enter_raw.mp3
+find_handbook_mentions.py
+*.log
