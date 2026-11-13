@@ -1,8 +1,19 @@
 {
-  "user": "Balasubramanian PG",
-  "xp": 0,
-  "streak": 0,
-  "level": 0,
-  "solved": [],
-  "history": []
+  "current_tier": "L0",
+  "current_tier_name": "Unemployed (Mom's School of Life)",
+  "xp": 12,
+  "solved_count": 1,
+  "streak_days": 1,
+  "last_active": "2026-11-12",
+  "questions": {
+    "App Activity Analysis": {
+      "grade": "D",
+      "status": "completed",
+      "difficulty": "medium",
+      "last_mode": "pair",
+      "best_wpm": 45,
+      "solved_at": "2026-11-12"
+    }
+  },
+  "mistake_log": []
 }
