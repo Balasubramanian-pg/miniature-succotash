@@ -50,9 +50,10 @@
   --color-error: #f87171;
   --color-success: #34d399;
 
-  --font-display: "Geologica", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Geologica", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: 'Abner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Abner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Google Sans', sans-serif;
+  --font-code: 'Google Sans', sans-serif;
 
   --radius-card: 4px;
   --radius-pill: 999px;

@@ -33,10 +33,10 @@
   --grid-line: rgba(0, 240, 255, 0.07);
 
   /* Fonts */
-  --font-anime: 'Orbitron', 'Silkscreen', sans-serif;
-  --font-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
-  --font-pixel: 'Silkscreen', 'Press Start 2P', monospace;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-anime: 'Abner', -apple-system, sans-serif;
+  --font-mono: 'Google Sans', sans-serif;
+  --font-pixel: 'Abner', -apple-system, sans-serif;
+  --font-body: 'Abner', -apple-system, sans-serif;
 }
 
 * {

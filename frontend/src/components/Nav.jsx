@@ -9,11 +9,7 @@ import {
   Play,
   Square,
   Search,
-  GitBranch,
-  Home,
-  Terminal,
-  BookOpen,
-  TrendingUp
+  GitBranch
 } from "lucide-react";
 
 export function Nav({
@@ -48,49 +44,6 @@ export function Nav({
       <div className="earth-brand" onClick={() => onTabChange("home")} style={{ cursor: "pointer" }}>
         <span className="earth-logo">RAILS</span>
         <span className="earth-tag">Data Engineering Interview Engine</span>
-      </div>
-
-      {/* Center Navigation Tabs with Home-Row Keyboard Shortcuts */}
-      <div className="earth-tabs">
-        <button
-          className={`earth-tab ${activeTab === "home" ? "active" : ""}`}
-          onClick={() => onTabChange("home")}
-          title="Home Dashboard & Chill Zone (⌘H)"
-        >
-          <Home size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
-          <span>Home</span>
-          <span className="earth-shortcut-badge">⌘H</span>
-        </button>
-
-        <button
-          className={`earth-tab ${activeTab === "workspace" ? "active" : ""}`}
-          onClick={() => onTabChange("workspace")}
-          title="LeetCode-Style Typing & DuckDB Workspace (⌘K)"
-        >
-          <Terminal size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
-          <span>Workspace</span>
-          <span className="earth-shortcut-badge">⌘K</span>
-        </button>
-
-        <button
-          className={`earth-tab ${activeTab === "handbook" ? "active" : ""}`}
-          onClick={() => onTabChange("handbook")}
-          title="Open SQL & PySpark Pattern Codex (⌘B)"
-        >
-          <BookOpen size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
-          <span>Handbook</span>
-          <span className="earth-shortcut-badge">⌘B</span>
-        </button>
-
-        <button
-          className={`earth-tab ${activeTab === "ladder" ? "active" : ""}`}
-          onClick={() => onTabChange("ladder")}
-          title="Career Progression Skill Tree (⌘L)"
-        >
-          <TrendingUp size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
-          <span>Ladder</span>
-          <span className="earth-shortcut-badge">⌘L</span>
-        </button>
       </div>
 
       {/* Right Controls */}

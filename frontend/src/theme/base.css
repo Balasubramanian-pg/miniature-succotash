@@ -77,6 +77,10 @@ button, input, select, textarea {
   font: inherit;
 }
 
+code, pre, kbd, samp, tt, var {
+  font-family: var(--font-code, 'Google Sans', sans-serif) !important;
+}
+
 .container {
   width: 100%;
   max-width: var(--container);

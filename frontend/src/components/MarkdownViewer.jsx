@@ -17,7 +17,7 @@ try {
       lineColor: "#d99b43",
       secondaryColor: "#24262d",
       tertiaryColor: "#111215",
-      fontFamily: "'JetBrains Mono', monospace"
+      fontFamily: "'Google Sans', sans-serif"
     },
     securityLevel: "loose"
   });
@@ -215,13 +215,13 @@ function renderVisualFallback(code) {
   });
 
   if (nodes.length === 0) {
-    return `<pre style="margin: 0; color: #a1a1aa; overflow-x: auto; line-height: 1.5; font-family: 'JetBrains Mono', monospace;">${code}</pre>`;
+    return `<pre style="margin: 0; color: #a1a1aa; overflow-x: auto; line-height: 1.5; font-family: 'Google Sans', sans-serif;">${code}</pre>`;
   }
 
   return `
     <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 0;">
       ${nodes.map((node, i) => `
-        <div style="background: #1c1d22; border: 1px solid var(--accent-amber); border-radius: 6px; padding: 8px 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-parchment); max-width: 90%; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+        <div style="background: #1c1d22; border: 1px solid var(--accent-amber); border-radius: 6px; padding: 8px 16px; font-family: 'Google Sans', sans-serif; font-size: 11px; color: var(--text-parchment); max-width: 90%; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
           ${node}
         </div>
         ${i < nodes.length - 1 ? `<div style="color: var(--accent-amber); font-size: 14px; line-height: 1;">↓</div>` : ""}
