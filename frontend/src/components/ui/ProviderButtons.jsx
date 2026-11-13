@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React from "react";
 
 export function ProviderButtons({ className = "", onSelectProvider }) {
@@ -61,3 +60,31 @@ export function ProviderButtons({ className = "", onSelectProvider }) {
           aria-label={p.label}
           style={{
             display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "30px",
+            height: "30px",
+            borderRadius: "6px",
+            background: "rgba(255, 255, 255, 0.02)",
+            border: "1px solid var(--border-subtle)",
+            color: "var(--text-muted)",
+            cursor: "pointer",
+            transition: "all 0.15s ease"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "var(--accent-amber)";
+            e.currentTarget.style.borderColor = "var(--accent-amber)";
+            e.currentTarget.style.background = "rgba(217, 155, 67, 0.08)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "var(--text-muted)";
+            e.currentTarget.style.borderColor = "var(--border-subtle)";
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.02)";
+          }}
+        >
+          {p.icon}
+        </button>
+      ))}
+    </div>
+  );
+}
