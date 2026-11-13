@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useRef, useEffect } from "react";
 
 export function HoverCard({ trigger, children, openDelay = 100, closeDelay = 150 }) {
@@ -121,3 +120,56 @@ export function PatternHoverCardContent({ pattern }) {
           lineHeight: 1.3
         }}
       >
+        {pattern.title}
+      </div>
+
+      {/* FAANG Companies */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+        {["Meta", "Amazon", "Google", "Databricks"].map((comp) => (
+          <span
+            key={comp}
+            style={{
+              fontSize: "9.5px",
+              background: "rgba(255, 255, 255, 0.04)",
+              color: "var(--text-muted)",
+              padding: "1px 6px",
+              borderRadius: "4px",
+              fontFamily: "var(--font-code)"
+            }}
+          >
+            {comp}
+          </span>
+        ))}
+      </div>
+
+      {/* Execution Strategy */}
+      <div
+        style={{
+          fontSize: "11px",
+          color: "var(--text-dim)",
+          lineHeight: 1.5,
+          borderTop: "1px solid var(--border-subtle)",
+          paddingTop: "8px"
+        }}
+      >
+        Interactive architectural flow diagram, SQL implementation variations, dialect nuances, and execution engine tradeoffs.
+      </div>
+
+      {/* Action Footer */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontSize: "10.5px",
+          fontFamily: "var(--font-code)",
+          color: "var(--accent-amber)",
+          fontWeight: 500
+        }}
+      >
+        <span>Click to Inspect ⌘B</span>
+        <span>→</span>
+      </div>
+    </div>
+  );
+}
