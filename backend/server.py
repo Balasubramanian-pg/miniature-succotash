@@ -1,4 +1,3 @@
-# [v1.0-scaffold] Core architectural signatures and baseline handlers
 import os
 import re
 import json
@@ -317,3 +316,175 @@ def get_pattern(filename: str):
     return {"filename": found[0].name, "content": content}
 
 class ExecuteRequest(BaseModel):
+    query: str
+    input_tables: Dict[str, Any]
+    expected_output: Optional[Dict[str, Any]] = None
+
+@app.post("/api/execute")
+def execute_query(req: ExecuteRequest):
+    start_time = time.time()
+    con = duckdb.connect(":memory:")
+    
+    # Register each table
+    try:
+        for tbl_name, tbl_data in req.input_tables.items():
+            clean_tbl = re.sub(r"[^\w]", "_", tbl_name).strip("_")
+            rows = tbl_data.get("rows", [])
+            cols = tbl_data.get("columns", [])
+            if rows:
+                df = pd.DataFrame(rows)
+                for col in df.columns:
+                    if df[col].dtype == object:
+                        s = df[col].dropna()
+                        if not s.empty and re.match(r"^\d{4}-\d{2}-\d{2}", str(s.iloc[0])):
+                            try:
+                                df[col] = pd.to_datetime(df[col])
+                            except Exception:
+                                pass
+            elif cols:
+                df = pd.DataFrame(columns=cols)
+            else:
+                df = pd.DataFrame()
+            con.register(clean_tbl, df)
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed setting up input tables: {str(e)}",
+            "execution_ms": round((time.time() - start_time) * 1000, 2)
+        }
+        
+    # Execute User Query
+    try:
+        res_df = con.execute(req.query).fetchdf()
+        exec_ms = round((time.time() - start_time) * 1000, 2)
+        
+        # Format results
+        res_cols = list(res_df.columns)
+        # Convert NaN to None for clean JSON serialization
+        res_df = res_df.where(pd.notnull(res_df), None)
+        res_rows = res_df.to_dict(orient="records")
+        
+        # Compare with expected output if provided
+        matches_expected = False
+        diff_info = None
+        
+        if req.expected_output and req.expected_output.get("rows"):
+            exp_rows = req.expected_output.get("rows", [])
+            exp_cols = req.expected_output.get("columns", [])
+            
+            # Normalization helper for comparison
+            def normalize_val(v):
+                if v is None or v == "":
+                    return None
+                try:
+                    num = float(v)
+                    return round(num, 2)
+                except Exception:
+                    return str(v).strip().lower()
+
+            # Check row count
+            if len(res_rows) == len(exp_rows):
+                # Match row by row regardless of column name case
+                matched_all = True
+                for i in range(len(res_rows)):
+                    r_act = res_rows[i]
+                    r_exp = exp_rows[i]
+                    # Map values
+                    v_act = [normalize_val(v) for v in r_act.values()]
+                    v_exp = [normalize_val(v) for v in r_exp.values()]
+                    if sorted([str(x) for x in v_act]) != sorted([str(x) for x in v_exp]):
+                        matched_all = False
+                        break
+                matches_expected = matched_all
+            else:
+                diff_info = f"Row count mismatch: expected {len(exp_rows)}, got {len(res_rows)}"
+
+        return {
+            "success": True,
+            "columns": res_cols,
+            "rows": res_rows,
+            "row_count": len(res_rows),
+            "execution_ms": exec_ms,
+            "matches_expected": matches_expected,
+            "diff_info": diff_info
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "execution_ms": round((time.time() - start_time) * 1000, 2)
+        }
+
+class ProgressUpdate(BaseModel):
+    question_id: str
+    difficulty: str
+    mode: str          # "pair" or "solo"
+    grade: str         # "A", "B", "C", "D"
+    wpm: Optional[int] = 0
+    accuracy: Optional[float] = 100.0
+    elapsed_seconds: Optional[int] = 0
+    mistake_note: Optional[str] = None
+
+@app.get("/api/progress")
+def get_progress():
+    return load_progress()
+
+@app.post("/api/progress")
+def update_progress(item: ProgressUpdate):
+    prog = load_progress()
+    today = time.strftime("%Y-%m-%d")
+    
+    # Update question record
+    user_q = prog["questions"].get(item.question_id, {})
+    # If solved in pair mode, grade is strictly capped at D
+    effective_grade = "D" if item.mode == "pair" else item.grade
+    
+    # Only upgrade grade if better (A > B > C > D)
+    grade_priority = {"A": 4, "B": 3, "C": 2, "D": 1, None: 0}
+    current_best_grade = user_q.get("grade")
+    if grade_priority.get(effective_grade, 0) >= grade_priority.get(current_best_grade, 0):
+        user_q["grade"] = effective_grade
+        
+    user_q["status"] = "completed"
+    user_q["difficulty"] = item.difficulty
+    user_q["last_mode"] = item.mode
+    user_q["best_wpm"] = max(user_q.get("best_wpm", 0), item.wpm or 0)
+    user_q["solved_at"] = today
+    prog["questions"][item.question_id] = user_q
+    
+    # Calculate XP
+    base_xp = 10 if item.difficulty == "easy" else (25 if item.difficulty == "medium" else 50)
+    if effective_grade == "A":
+        multiplier = 1.5
+    elif effective_grade == "B":
+        multiplier = 1.2
+    elif effective_grade == "C":
+        multiplier = 1.0
+    else: # D (Pair programming)
+        multiplier = 0.5
+    prog["xp"] = prog.get("xp", 0) + int(base_xp * multiplier)
+    
+    # Update Corporate Ladder Tier
+    new_tier, new_tier_name = calculate_tier(prog["questions"])
+    prog["current_tier"] = new_tier
+    prog["current_tier_name"] = new_tier_name
+    prog["solved_count"] = len([q for q in prog["questions"].values() if q.get("status") == "completed"])
+    
+    # Log mistake if present
+    if item.mistake_note:
+        prog.setdefault("mistake_log", []).append({
+            "question_id": item.question_id,
+            "date": today,
+            "note": item.mistake_note
+        })
+        
+    save_progress(prog)
+    return prog
+
+@app.get("/api/clanker")
+def get_clanker_roast():
+    return {"message": random.choice(CLANKER_ROASTS)}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("server:app", host="127.0.0.1", port=8000, reload=True)
