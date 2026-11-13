@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import { MarkdownViewer } from "./MarkdownViewer";
 import { soundEngine } from "../audio/synthAudio";
@@ -207,3 +206,93 @@ export function Handbook({ onOpenWorkspace }) {
                         fontFamily: "var(--font-code)"
                       }}
                     >
+                      {p.category}
+                    </div>
+                  </div>
+                }
+              >
+                <PatternHoverCardContent pattern={p} />
+              </HoverCard>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Draggable Resizer Bar */}
+      <div
+        className={`workspace-resizer ${isDragging ? "dragging" : ""}`}
+        onMouseDown={() => setIsDragging(true)}
+        title="Drag to resize pattern list"
+      />
+
+      {/* Pattern Detail Viewer (Widescreen Reading View) */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: "28px 44px",
+          background: "var(--bg-study)"
+        }}
+      >
+        {loading ? (
+          <div style={{ padding: "40px", color: "var(--text-muted)", fontSize: "13px", fontFamily: "var(--font-code)" }}>
+            Loading pattern analysis and architecture diagram...
+          </div>
+        ) : (
+          <div style={{ maxWidth: "880px", margin: "0 auto" }}>
+            {/* Header */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                borderBottom: "1px solid var(--border-subtle)",
+                paddingBottom: "16px",
+                marginBottom: "24px"
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    color: "var(--accent-amber)",
+                    fontFamily: "var(--font-code)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.06em"
+                  }}
+                >
+                  Category: {selectedPattern?.category}
+                </div>
+                <h1
+                  style={{
+                    fontFamily: "var(--font-heading)",
+                    fontSize: "24px",
+                    fontWeight: 600,
+                    color: "var(--text-parchment)",
+                    margin: "6px 0 0"
+                  }}
+                >
+                  {selectedPattern?.title}
+                </h1>
+              </div>
+
+              {onOpenWorkspace && (
+                <button
+                  type="button"
+                  onClick={onOpenWorkspace}
+                  className="earth-btn earth-btn-primary"
+                  style={{ fontSize: "11.5px" }}
+                >
+                  Practice in Workspace ⌘K →
+                </button>
+              )}
+            </div>
+
+            {/* Markdown & Flowchart Viewer */}
+            <MarkdownViewer content={patternContent} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
