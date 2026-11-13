@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect, useRef } from "react";
 import { soundEngine } from "../audio/synthAudio";
 
@@ -190,3 +189,85 @@ export function GhostEditor({
             caretColor: "transparent",
             border: "none",
             outline: "none",
+            resize: "none",
+            fontFamily: "var(--font-code)",
+            fontSize: "13.5px",
+            lineHeight: 1.6,
+            padding: "20px 24px 20px 64px",
+            zIndex: 10,
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-all"
+          }}
+          placeholder="Start typing out the solution..."
+        />
+
+        {/* Line Numbers Column */}
+        <div style={{
+          width: "36px",
+          textAlign: "right",
+          paddingRight: "16px",
+          color: "var(--text-dim)",
+          userSelect: "none",
+          fontFamily: "var(--font-code)",
+          fontSize: "13.5px",
+          lineHeight: 1.6
+        }}>
+          {lineNumbers.map(n => (
+            <div key={n}>{n}</div>
+          ))}
+        </div>
+
+        {/* Parchment Typed Text & Subtle Dimmed Ghost Code */}
+        <div style={{
+          flex: 1,
+          fontFamily: "var(--font-code)",
+          fontSize: "13.5px",
+          lineHeight: 1.6,
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-all",
+          pointerEvents: "none"
+        }}>
+          {targetChars.map((tChar, idx) => {
+            const userChar = inputChars[idx];
+            const isCursor = idx === inputCode.length;
+
+            if (userChar === undefined) {
+              return (
+                <span key={idx}>
+                  {isCursor && <span className="human-block-caret" />}
+                  <span style={{ color: "rgba(255, 255, 255, 0.22)" }}>
+                    {tChar}
+                  </span>
+                </span>
+              );
+            }
+
+            if (userChar === tChar) {
+              return (
+                <span key={idx} style={{ color: "var(--text-parchment)", fontWeight: 400 }}>
+                  {userChar}
+                </span>
+              );
+            } else {
+              return (
+                <span
+                  key={idx}
+                  style={{
+                    background: "var(--accent-terracotta-dim)",
+                    color: "var(--accent-terracotta)",
+                    textDecoration: "underline"
+                  }}
+                >
+                  {userChar === " " ? "·" : userChar}
+                </span>
+              );
+            }
+          })}
+          {inputCode.length >= targetChars.length && (
+            <span className="human-block-caret" />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
