@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
 
@@ -129,3 +128,60 @@ export function Nav({
           <span>{muted ? "🔇 Sound: Off" : "⌨️ Sound: On"}</span>
         </button>
 
+        {/* Victory Music Track Pill */}
+        {isMusicPlaying && (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            fontSize: "11px",
+            fontFamily: "var(--font-code)",
+            color: "var(--accent-amber)",
+            background: "var(--accent-amber-dim)",
+            border: "1px solid var(--accent-amber)",
+            padding: "2px 8px",
+            borderRadius: "var(--radius-sm)"
+          }}>
+            <span>🎶 Shooting Star</span>
+            <button
+              onClick={() => soundEngine.toggleMusicPlayback()}
+              style={{
+                background: "transparent",
+                border: "none",
+                color: "var(--text-parchment)",
+                cursor: "pointer",
+                padding: "0 2px"
+              }}
+              title="Pause/Resume"
+            >
+              ⏸
+            </button>
+            <button
+              onClick={() => soundEngine.stopSuccessMusic()}
+              style={{
+                background: "transparent",
+                border: "none",
+                color: "var(--text-dim)",
+                cursor: "pointer",
+                padding: "0 2px"
+              }}
+              title="Stop track"
+            >
+              ⏹
+            </button>
+          </div>
+        )}
+
+        {/* Question Search Shortcut */}
+        <span
+          className="earth-shortcut-badge"
+          onClick={onOpenSearch}
+          title="Fuzzy search problems (Ctrl+P)"
+          style={{ padding: "4px 8px", cursor: "pointer" }}
+        >
+          ⌘P Search
+        </span>
+      </div>
+    </header>
+  );
+}
