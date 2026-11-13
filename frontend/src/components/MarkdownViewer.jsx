@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useEffect, useRef } from "react";
 import { Marked } from "marked";
 import mermaid from "mermaid";
@@ -211,3 +210,94 @@ function renderVisualFallback(code) {
       const text = match[1] || match[2] || match[3];
       if (text && !nodes.includes(text)) {
         nodes.push(text);
+      }
+    }
+  });
+
+  if (nodes.length === 0) {
+    return `<pre style="margin: 0; color: #a1a1aa; overflow-x: auto; line-height: 1.5; font-family: 'JetBrains Mono', monospace;">${code}</pre>`;
+  }
+
+  return `
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 0;">
+      ${nodes.map((node, i) => `
+        <div style="background: #1c1d22; border: 1px solid var(--accent-amber); border-radius: 6px; padding: 8px 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-parchment); max-width: 90%; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+          ${node}
+        </div>
+        ${i < nodes.length - 1 ? `<div style="color: var(--accent-amber); font-size: 14px; line-height: 1;">↓</div>` : ""}
+      `).join("")}
+    </div>
+  `;
+}
+
+export function MarkdownViewer({ content }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !content) return;
+
+    purgeMermaidBombs();
+
+    // Strip yaml frontmatter if present
+    let rawContent = content;
+    if (rawContent.startsWith("---")) {
+      const parts = rawContent.split("---", 3);
+      if (parts.length >= 3) {
+        rawContent = parts[2].trim();
+      }
+    }
+
+    try {
+      const rawHtml = markdownParser.parse(rawContent);
+      containerRef.current.innerHTML = rawHtml;
+    } catch (parseErr) {
+      console.warn("Markdown parse warning:", parseErr);
+      containerRef.current.innerText = rawContent;
+      return;
+    }
+
+    // Render Mermaid diagrams safely
+    const mermaidNodes = containerRef.current.querySelectorAll(".mermaid-diagram");
+    mermaidNodes.forEach(async (node, idx) => {
+      const rawCode = decodeURIComponent(node.getAttribute("data-mermaid") || "");
+      const sanitized = sanitizeMermaid(rawCode);
+      const uniqueId = `mermaid_diag_${Date.now()}_${idx}_${Math.floor(Math.random() * 10000)}`;
+
+      try {
+        const { svg } = await mermaid.render(uniqueId, sanitized);
+        node.innerHTML = svg;
+      } catch (err) {
+        purgeMermaidBombs();
+
+        // Render clean earthly visual flowchart fallback
+        node.innerHTML = `
+          <div style="background: #16171b; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; margin: 8px 0; text-align: left;">
+            <div style="color: var(--accent-amber); font-size: 10px; margin-bottom: 10px; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.05em; font-weight: 600;">
+              Execution Flow Architecture
+            </div>
+            ${renderVisualFallback(sanitized || rawCode)}
+          </div>
+        `;
+      } finally {
+        purgeMermaidBombs();
+      }
+    });
+
+    return () => {
+      purgeMermaidBombs();
+    };
+  }, [content]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="markdown-rendered-body"
+      style={{
+        lineHeight: 1.7,
+        fontSize: "0.875rem",
+        color: "var(--text-parchment)",
+        overflowWrap: "break-word"
+      }}
+    />
+  );
+}
