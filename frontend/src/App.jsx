@@ -15,6 +15,7 @@ import { ExtendDrawer } from "./components/ExtendDrawer";
 import { MarkdownViewer } from "./components/MarkdownViewer";
 import { QuestionTree } from "./components/ui/QuestionTree";
 import { ModeToggleGroup } from "./components/ui/ToggleGroup";
+import { ChevronRight, ChevronLeft, FolderTree, FileText } from "lucide-react";
 
 export default function App() {
   const [questions, setQuestions] = useState([]);
@@ -385,7 +386,7 @@ export default function App() {
                     transition: "background 0.15s ease"
                   }}
                 >
-                  <span style={{ fontSize: "12px", color: "var(--accent-amber)" }}>▶</span>
+                  <ChevronRight size={14} style={{ color: "var(--accent-amber)" }} />
                   <span
                     style={{
                       writingMode: "vertical-rl",
@@ -430,10 +431,13 @@ export default function App() {
                             background: workspaceDrawerTab === "tree" ? "var(--bg-card)" : "transparent",
                             border: workspaceDrawerTab === "tree" ? "1px solid var(--accent-amber)" : "1px solid transparent",
                             color: workspaceDrawerTab === "tree" ? "var(--accent-amber)" : "var(--text-muted)",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center"
                           }}
                         >
-                          🌲 Tree Navigator
+                          <FolderTree size={12} style={{ marginRight: 5 }} />
+                          <span>Tree Navigator</span>
                         </button>
                         <button
                           type="button"
@@ -446,10 +450,13 @@ export default function App() {
                             background: workspaceDrawerTab === "spec" ? "var(--bg-card)" : "transparent",
                             border: workspaceDrawerTab === "spec" ? "1px solid var(--accent-amber)" : "1px solid transparent",
                             color: workspaceDrawerTab === "spec" ? "var(--accent-amber)" : "var(--text-muted)",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center"
                           }}
                         >
-                          📜 Problem Spec
+                          <FileText size={12} style={{ marginRight: 5 }} />
+                          <span>Problem Spec</span>
                         </button>
                       </div>
 
@@ -457,10 +464,11 @@ export default function App() {
                         type="button"
                         onClick={() => setIsSidebarCollapsed(true)}
                         className="earth-btn"
-                        style={{ fontSize: "10.5px", padding: "3px 8px" }}
+                        style={{ fontSize: "10.5px", padding: "3px 8px", display: "flex", alignItems: "center" }}
                         title="Minimize drawer to expand Editor"
                       >
-                        ◀ Minimize
+                        <ChevronLeft size={12} style={{ marginRight: 3 }} />
+                        <span>Minimize</span>
                       </button>
                     </div>
 
@@ -625,18 +633,20 @@ export default function App() {
                         onClick={handlePrevQuestion}
                         title="Previous Question (Ctrl+[)"
                         className="earth-btn"
-                        style={{ fontSize: "10.5px", padding: "4px 8px" }}
+                        style={{ fontSize: "10.5px", padding: "4px 8px", display: "flex", alignItems: "center" }}
                       >
-                        ◀ Prev
+                        <ChevronLeft size={12} style={{ marginRight: 3 }} />
+                        <span>Prev</span>
                       </button>
                       <button
                         type="button"
                         onClick={handleNextQuestion}
                         title="Next Question (Ctrl+])"
                         className="earth-btn"
-                        style={{ fontSize: "10.5px", padding: "4px 8px" }}
+                        style={{ fontSize: "10.5px", padding: "4px 8px", display: "flex", alignItems: "center" }}
                       >
-                        Next ▶
+                        <span>Next</span>
+                        <ChevronRight size={12} style={{ marginLeft: 3 }} />
                       </button>
                     </div>
                   </div>

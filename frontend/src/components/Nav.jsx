@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
+import {
+  Flame,
+  VolumeX,
+  Keyboard,
+  Music,
+  Pause,
+  Play,
+  Square,
+  Search,
+  GitBranch,
+  Home,
+  Terminal,
+  BookOpen,
+  TrendingUp
+} from "lucide-react";
 
 export function Nav({
   activeTab,
@@ -30,7 +45,7 @@ export function Nav({
   return (
     <header className="earth-nav">
       {/* Brand */}
-      <div className="earth-brand" onClick={() => onTabChange("home")}>
+      <div className="earth-brand" onClick={() => onTabChange("home")} style={{ cursor: "pointer" }}>
         <span className="earth-logo">RAILS</span>
         <span className="earth-tag">Data Engineering Interview Engine</span>
       </div>
@@ -42,6 +57,7 @@ export function Nav({
           onClick={() => onTabChange("home")}
           title="Home Dashboard & Chill Zone (⌘H)"
         >
+          <Home size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
           <span>Home</span>
           <span className="earth-shortcut-badge">⌘H</span>
         </button>
@@ -51,6 +67,7 @@ export function Nav({
           onClick={() => onTabChange("workspace")}
           title="LeetCode-Style Typing & DuckDB Workspace (⌘K)"
         >
+          <Terminal size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
           <span>Workspace</span>
           <span className="earth-shortcut-badge">⌘K</span>
         </button>
@@ -60,6 +77,7 @@ export function Nav({
           onClick={() => onTabChange("handbook")}
           title="Open SQL & PySpark Pattern Codex (⌘B)"
         >
+          <BookOpen size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
           <span>Handbook</span>
           <span className="earth-shortcut-badge">⌘B</span>
         </button>
@@ -69,6 +87,7 @@ export function Nav({
           onClick={() => onTabChange("ladder")}
           title="Career Progression Skill Tree (⌘L)"
         >
+          <TrendingUp size={13} style={{ marginRight: 5, verticalAlign: "middle" }} />
           <span>Ladder</span>
           <span className="earth-shortcut-badge">⌘L</span>
         </button>
@@ -84,7 +103,7 @@ export function Nav({
             title="Connect Custom GitHub Repository / Plug & Play"
             style={{ fontSize: "11px", display: "flex", alignItems: "center", gap: "6px" }}
           >
-            <span style={{ color: "#10b981", fontSize: "10px" }}>●</span>
+            <GitBranch size={13} style={{ color: "#10b981" }} />
             <span style={{ color: "var(--text-parchment)" }}>{repoName}</span>
           </button>
         )}
@@ -101,7 +120,7 @@ export function Nav({
           padding: "3px 8px",
           borderRadius: "var(--radius-sm)"
         }}>
-          <span>🔥</span>
+          <Flame size={13} style={{ color: "#f59e0b" }} />
           <span>{streakDays} Day Streak</span>
         </div>
 
@@ -124,8 +143,10 @@ export function Nav({
           className="earth-btn"
           onClick={handleMuteToggle}
           title={muted ? "Unmute mechanical keyboard sound" : "Mute mechanical keyboard sound"}
+          style={{ display: "flex", alignItems: "center", gap: "5px" }}
         >
-          <span>{muted ? "🔇 Sound: Off" : "⌨️ Sound: On"}</span>
+          {muted ? <VolumeX size={13} /> : <Keyboard size={13} />}
+          <span>{muted ? "Sound: Off" : "Sound: On"}</span>
         </button>
 
         {/* Victory Music Track Pill */}
@@ -142,7 +163,8 @@ export function Nav({
             padding: "2px 8px",
             borderRadius: "var(--radius-sm)"
           }}>
-            <span>🎶 Shooting Star</span>
+            <Music size={12} />
+            <span>Shooting Star</span>
             <button
               onClick={() => soundEngine.toggleMusicPlayback()}
               style={{
@@ -150,11 +172,13 @@ export function Nav({
                 border: "none",
                 color: "var(--text-parchment)",
                 cursor: "pointer",
-                padding: "0 2px"
+                padding: "0 2px",
+                display: "flex",
+                alignItems: "center"
               }}
               title="Pause/Resume"
             >
-              ⏸
+              <Pause size={11} />
             </button>
             <button
               onClick={() => soundEngine.stopSuccessMusic()}
@@ -163,11 +187,13 @@ export function Nav({
                 border: "none",
                 color: "var(--text-dim)",
                 cursor: "pointer",
-                padding: "0 2px"
+                padding: "0 2px",
+                display: "flex",
+                alignItems: "center"
               }}
               title="Stop track"
             >
-              ⏹
+              <Square size={10} fill="currentColor" />
             </button>
           </div>
         )}
@@ -177,9 +203,10 @@ export function Nav({
           className="earth-shortcut-badge"
           onClick={onOpenSearch}
           title="Fuzzy search problems (Ctrl+P)"
-          style={{ padding: "4px 8px", cursor: "pointer" }}
+          style={{ padding: "4px 8px", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}
         >
-          ⌘P Search
+          <Search size={11} />
+          <span>⌘P Search</span>
         </span>
       </div>
     </header>

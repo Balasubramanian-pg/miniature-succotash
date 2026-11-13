@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { soundEngine } from "../../audio/synthAudio";
+import { ChevronLeft, ChevronRight, Shuffle, Check } from "lucide-react";
 
 export function QuestionTree({
   questions = [],
@@ -130,7 +131,8 @@ export function QuestionTree({
               cursor: "pointer"
             }}
           >
-            <span>◀</span> Prev
+            <ChevronLeft size={12} />
+            <span>Prev</span>
           </button>
 
           <button
@@ -153,7 +155,8 @@ export function QuestionTree({
               cursor: "pointer"
             }}
           >
-            Next <span>▶</span>
+            <span>Next</span>
+            <ChevronRight size={12} />
           </button>
 
           <button
@@ -166,10 +169,13 @@ export function QuestionTree({
               background: "rgba(255, 255, 255, 0.04)",
               border: "1px solid var(--border-subtle)",
               color: "var(--text-muted)",
-              cursor: "pointer"
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
-            🎲
+            <Shuffle size={13} />
           </button>
         </div>
 
@@ -255,9 +261,7 @@ export function QuestionTree({
                   onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.04)")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.02)")}
                 >
-                  <span style={{ fontSize: "10px", color: "var(--accent-amber)", transition: "transform 0.15s ease", transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)" }}>
-                    ▶
-                  </span>
+                  <ChevronRight size={11} style={{ color: "var(--accent-amber)", transition: "transform 0.15s ease", transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)" }} />
 
                   <span style={{ display: "flex", color: isExpanded ? "var(--accent-amber)" : "var(--text-dim)" }}>
                     {isExpanded ? (
@@ -332,9 +336,9 @@ export function QuestionTree({
                           }}
                         >
                           {/* Status Icon */}
-                          <span style={{ fontSize: "11px", flexShrink: 0 }}>
+                          <span style={{ fontSize: "11px", flexShrink: 0, display: "flex", alignItems: "center" }}>
                             {isSolved ? (
-                              <span style={{ color: "#10b981", fontWeight: 700 }}>✓</span>
+                              <Check size={12} style={{ color: "#10b981", strokeWidth: 3 }} />
                             ) : (
                               <span style={{ color: "var(--text-dim)", opacity: 0.6 }}>•</span>
                             )}

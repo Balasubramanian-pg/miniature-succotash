@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
 import { ProviderButtons } from "./ui/ProviderButtons";
+import { X, GitBranch, User, Check, Star, Flame, FolderGit2, Sparkles } from "lucide-react";
 
 export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpdated }) {
   const [activeSubTab, setActiveSubTab] = useState("repo"); // "repo" | "profile"
@@ -164,11 +165,12 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                 border: "none",
                 color: "var(--text-dim)",
                 cursor: "pointer",
-                fontSize: "18px",
-                padding: "4px"
+                padding: "4px",
+                display: "flex",
+                alignItems: "center"
               }}
             >
-              ✕
+              <X size={18} />
             </button>
           </div>
 
@@ -186,10 +188,14 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                 fontSize: "13px",
                 fontWeight: activeSubTab === "repo" ? 600 : 400,
                 fontFamily: "var(--font-heading)",
-                cursor: "pointer"
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px"
               }}
             >
-              🔗 GitHub Repository Connect
+              <GitBranch size={14} />
+              <span>GitHub Repository Connect</span>
             </button>
 
             <button
@@ -204,10 +210,14 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                 fontSize: "13px",
                 fontWeight: activeSubTab === "profile" ? 600 : 400,
                 fontFamily: "var(--font-heading)",
-                cursor: "pointer"
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px"
               }}
             >
-              👤 Profile & Target Goals
+              <User size={14} />
+              <span>Profile & Target Goals</span>
             </button>
           </div>
         </div>
@@ -224,10 +234,14 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                 borderRadius: "6px",
                 fontSize: "12px",
                 fontFamily: "var(--font-code)",
-                marginBottom: "16px"
+                marginBottom: "16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px"
               }}
             >
-              ✓ {syncStatus}
+              <Check size={14} />
+              <span>{syncStatus}</span>
             </div>
           )}
 
@@ -242,19 +256,22 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                   {[
                     {
                       id: "default",
-                      title: "⭐ StrataScratch Curated Production (136 Questions)",
+                      icon: <Star size={14} style={{ color: "var(--accent-amber)" }} />,
+                      title: "StrataScratch Curated Production (136 Questions)",
                       desc: "Full DuckDB schema tables, official test cases, and PySpark solutions",
                       url: "https://github.com/stratascratch/sql-interview-questions"
                     },
                     {
                       id: "leetcode50",
-                      title: "🔥 LeetCode SQL 50 & Top Interview Collection",
+                      icon: <Flame size={14} style={{ color: "#f59e0b" }} />,
+                      title: "LeetCode SQL 50 & Top Interview Collection",
                       desc: "Top 50 high-frequency SQL interview questions mapped to FAANG",
                       url: "https://github.com/neetcode-gh/leetcode"
                     },
                     {
                       id: "custom",
-                      title: "📦 Connect Your Own Custom GitHub Repository",
+                      icon: <FolderGit2 size={14} style={{ color: "#38bdf8" }} />,
+                      title: "Connect Your Own Custom GitHub Repository",
                       desc: "Bring your own markdown/sql files. Our engine auto-enriches metadata",
                       url: ""
                     }
@@ -265,16 +282,17 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                       style={{
                         padding: "12px 14px",
                         borderRadius: "6px",
-                        background: selectedPreset === p.id ? "rgba(217, 155, 67, 0.1)" : "var(--bg-card)",
+                        background: selectedPreset === p.id ? "rgba(217, 155, 67, 0.12)" : "rgba(255, 255, 255, 0.02)",
                         border: selectedPreset === p.id ? "1px solid var(--accent-amber)" : "1px solid var(--border-subtle)",
                         cursor: "pointer",
-                        transition: "all 0.12s ease"
+                        transition: "all 0.15s ease"
                       }}
                     >
-                      <div style={{ fontSize: "12.5px", fontWeight: 600, color: "var(--text-parchment)" }}>
-                        {p.title}
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600, fontSize: "13px", color: "var(--text-parchment)", marginBottom: "3px" }}>
+                        {p.icon}
+                        <span>{p.title}</span>
                       </div>
-                      <div style={{ fontSize: "11px", color: "var(--text-dim)", marginTop: "2px" }}>
+                      <div style={{ fontSize: "11px", color: "var(--text-dim)", marginLeft: "22px" }}>
                         {p.desc}
                       </div>
                     </div>
@@ -339,8 +357,9 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                   fontSize: "11.5px"
                 }}
               >
-                <div style={{ color: "var(--accent-amber)", fontWeight: 600, fontFamily: "var(--font-code)", marginBottom: "4px" }}>
-                  ✨ Automated Metadata Enrichment Engine
+                <div style={{ color: "var(--accent-amber)", fontWeight: 600, fontFamily: "var(--font-code)", marginBottom: "4px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <Sparkles size={14} />
+                  <span>Automated Metadata Enrichment Engine</span>
                 </div>
                 <div style={{ color: "var(--text-dim)", lineHeight: 1.5 }}>
                   Even if your questions lack metadata (e.g. only question number or plain SQL filename), RAILS DE automatically detects the corresponding LeetCode ID, matches FAANG target companies (Meta, Google, Amazon), tags the architectural design pattern, and binds DuckDB in-memory test runner.

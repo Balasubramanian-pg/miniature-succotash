@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
+import { Music, Pause, Play, Square, Lightbulb } from "lucide-react";
 
 export function CompletionModal({
   isOpen,
@@ -114,7 +115,7 @@ export function CompletionModal({
             <div style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
+              gap: "6px",
               marginTop: "10px",
               background: "var(--accent-amber-dim)",
               border: "1px solid var(--accent-amber)",
@@ -124,7 +125,8 @@ export function CompletionModal({
               fontFamily: "var(--font-code)",
               color: "var(--accent-amber)"
             }}>
-              <span>🎶 Aero Chord - Shooting Star</span>
+              <Music size={12} />
+              <span>Aero Chord - Shooting Star</span>
               <button
                 onClick={() => soundEngine.toggleMusicPlayback()}
                 style={{
@@ -134,10 +136,16 @@ export function CompletionModal({
                   cursor: "pointer",
                   fontSize: "11px",
                   padding: "0 4px",
-                  fontWeight: 600
+                  fontWeight: 600,
+                  display: "flex",
+                  alignItems: "center"
                 }}
               >
-                {isPlayingMusic ? "⏸ Pause" : "▶ Resume"}
+                {isPlayingMusic ? (
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}><Pause size={10} /> Pause</span>
+                ) : (
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}><Play size={10} /> Resume</span>
+                )}
               </button>
               <button
                 onClick={() => soundEngine.stopSuccessMusic()}
@@ -147,11 +155,13 @@ export function CompletionModal({
                   color: "var(--text-dim)",
                   cursor: "pointer",
                   fontSize: "11px",
-                  padding: "0 2px"
+                  padding: "0 2px",
+                  display: "flex",
+                  alignItems: "center"
                 }}
                 title="Stop music"
               >
-                ⏹ Stop
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}><Square size={9} fill="currentColor" /> Stop</span>
               </button>
             </div>
           </div>
@@ -200,8 +210,9 @@ export function CompletionModal({
 
         {/* Human Post-Mortem Question */}
         <div style={{ marginTop: "16px" }}>
-          <label style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", marginBottom: "6px" }}>
-            💡 What caught you off guard on this problem? (1 sentence for future recall)
+          <label style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "11px", color: "var(--text-muted)", marginBottom: "6px" }}>
+            <Lightbulb size={12} style={{ color: "var(--accent-amber)" }} />
+            <span>What caught you off guard on this problem? (1 sentence for future recall)</span>
           </label>
           <input
             type="text"

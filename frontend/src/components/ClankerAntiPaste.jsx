@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Bot } from "lucide-react";
 
 export function AntiPasteModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -82,9 +83,13 @@ export function ClankerDrawer({ isOpen, onClose }) {
           <span style={{
             fontFamily: "var(--font-code)",
             fontSize: "11px",
-            color: "var(--accent-amber)"
+            color: "var(--accent-amber)",
+            display: "flex",
+            alignItems: "center",
+            gap: "5px"
           }}>
-            🤖 Clanker (2B LLM)
+            <Bot size={13} />
+            <span>Clanker (2B LLM)</span>
           </span>
         </div>
         <button

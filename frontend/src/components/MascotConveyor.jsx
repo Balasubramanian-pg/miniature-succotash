@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { soundEngine } from "../audio/synthAudio";
+import { Coffee, FileText, BookOpen, Sparkles, Activity, Heart } from "lucide-react";
 
 export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
   const [beads, setBeads] = useState([
-    { id: 1, x: 22, symbol: "☕" },
-    { id: 2, x: 42, symbol: "•" },
-    { id: 3, x: 62, symbol: "•" },
-    { id: 4, x: 82, symbol: "📜" }
+    { id: 1, x: 22, type: "coffee" },
+    { id: 2, x: 42, type: "dot" },
+    { id: 3, x: 62, type: "dot" },
+    { id: 4, x: 82, type: "doc" }
   ]);
   const [headNod, setHeadNod] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -23,11 +24,11 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
 
     // Roll new study beads occasionally
     if (keystrokeCount % 6 === 0) {
-      const symbols = ["•", "☕", "•", "📖"];
+      const types = ["dot", "coffee", "dot", "book"];
       const newBead = {
         id: Date.now() + Math.random(),
         x: 4,
-        symbol: symbols[Math.floor(Math.random() * symbols.length)]
+        type: types[Math.floor(Math.random() * types.length)]
       };
       setBeads(prev => [...prev.slice(-10), newBead]);
     }
@@ -62,8 +63,8 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
     setIsPetting(true);
     setTimeout(() => setIsPetting(false), 220);
 
-    // Spawn floating heart or focus particle
-    const particles = ["🧡 +1 Focus", "✨ Purr...", "🍊 +10 Chill", "♨️ Cozy", "❤️ Good Luck!"];
+    // Spawn floating focus particle
+    const particles = ["+1 Focus", "Purr...", "+10 Chill", "Cozy Warm", "Good Luck!"];
     const text = particles[Math.floor(Math.random() * particles.length)];
     const newParticle = {
       id: Date.now() + Math.random(),
@@ -75,6 +76,19 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
     setTimeout(() => {
       setFloatingParticles(prev => prev.filter(p => p.id !== newParticle.id));
     }, 1200);
+  };
+
+  const renderBead = (type) => {
+    switch (type) {
+      case "coffee":
+        return <Coffee size={11} />;
+      case "doc":
+        return <FileText size={11} />;
+      case "book":
+        return <BookOpen size={11} />;
+      default:
+        return <span>•</span>;
+    }
   };
 
   return (
@@ -94,7 +108,7 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
         alignItems: "center",
         gap: "6px"
       }}>
-        <span style={{ color: "var(--accent-amber)" }}>●</span>
+        <Activity size={12} style={{ color: "var(--accent-amber)" }} />
         <span>Study Cadence</span>
       </div>
 
@@ -107,12 +121,14 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
             left: `${b.x}%`,
             bottom: "8px",
             fontSize: "11px",
-            color: b.symbol === "•" ? "var(--text-dim)" : "var(--accent-amber)",
+            color: b.type === "dot" ? "var(--text-dim)" : "var(--accent-amber)",
             userSelect: "none",
-            pointerEvents: "none"
+            pointerEvents: "none",
+            display: "flex",
+            alignItems: "center"
           }}
         >
-          {b.symbol}
+          {renderBead(b.type)}
         </div>
       ))}
 
@@ -135,25 +151,30 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
             pointerEvents: "none",
             animation: "floatUp 1.2s ease-out forwards",
             zIndex: 110,
-            whiteSpace: "nowrap"
+            whiteSpace: "nowrap",
+            display: "flex",
+            alignItems: "center",
+            gap: "4px"
           }}
         >
-          {p.text}
+          <Sparkles size={11} />
+          <span>{p.text}</span>
         </div>
       ))}
 
-      {/* Hand-Drawn Cozy Study Capybara Companion */}
+      {/* Interactive Capybara Desk Mascot */}
       <div
+        className="capy-mascot-container"
+        onClick={handlePet}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={handlePet}
-        title="Click to pet the study capybara (+1 Focus)"
+        title="Study Companion Capybara · Click to pet (+1 Focus)"
         style={{
           position: "absolute",
-          bottom: "6px",
           left: "50%",
-          transform: `translateX(-50%) translateY(${headNod ? "2px" : isPetting ? "-4px" : isHovered ? "-2px" : "0px"}) scale(${isHovered ? "1.06" : "1.0"})`,
-          transition: "transform 0.12s ease",
+          bottom: "2px",
+          transform: `translateX(-50%) scale(${isPetting ? 1.08 : 1})`,
+          transition: "transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -178,9 +199,9 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
             boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
             display: "flex",
             alignItems: "center",
-            gap: "4px"
+            gap: "5px"
           }}>
-            <span>🍊</span>
+            <Sparkles size={10} style={{ color: "var(--accent-amber)" }} />
             <span>{petCount > 0 ? `Petted ${petCount}x · ~ purr ~` : "Click to pet (+1 Focus)"}</span>
           </div>
         )}
@@ -228,47 +249,55 @@ export function MascotConveyor({ keystrokeCount, wpm, combo, isTyping }) {
           {isHovered || isPetting ? (
             <path d="M37 15 Q39 12 42 15" stroke="#3b2012" strokeWidth="1.5" strokeLinecap="round" fill="none" />
           ) : (
-            <path d="M38 15C39 17 41 17 42 15" stroke="#3b2012" strokeWidth="1.2" strokeLinecap="round" />
+            <line x1="37" y1="15" x2="42" y2="15" stroke="#3b2012" strokeWidth="1.4" strokeLinecap="round" />
           )}
 
-          {/* Rosy Blush Cheek (shows when hovered / petted) */}
+          {/* Ears */}
+          <ellipse cx="32" cy="12" rx="2.2" ry="3.5" fill="#8c5a34" />
+          <ellipse cx="32" cy="12" rx="1.2" ry="2" fill="#59341a" />
+
+          {/* Cute Little Paws resting on desk rail */}
+          <ellipse cx="36" cy="38" rx="3.5" ry="2" fill="#8c5a34" />
+          <ellipse cx="43" cy="38" rx="3" ry="1.8" fill="#8c5a34" />
+
+          {/* Rosy blushing cheek when petted */}
           {(isHovered || isPetting) && (
-            <ellipse cx="38" cy="21" rx="3" ry="1.8" fill="rgba(201, 98, 79, 0.45)" />
+            <circle cx="41" cy="20" r="2.2" fill="#e06c75" opacity="0.4" />
           )}
-
-          {/* Cute Tiny Ear (wiggles on pet) */}
-          <ellipse cx="31" cy="11" rx="2.2" ry="3" fill="#7d4d29" transform={isPetting ? "rotate(-10 31 11)" : "rotate(0)"} />
-
-          {/* Steaming Ceramic Coffee Mug Next to Companion */}
-          <rect x="6" y="28" width="9" height="12" rx="1.5" fill="#ece8e1" stroke="#1c1d22" strokeWidth="1" />
-          {/* Mug handle */}
-          <path d="M6 31H3C2 31 2 37 3 37H6" stroke="#ece8e1" strokeWidth="1" fill="none" />
-          
-          {/* Rising steam / love hearts from coffee */}
-          <path d="M8 24C7 21 11 20 9 16" stroke="var(--accent-amber)" strokeWidth="1" strokeLinecap="round" opacity={isHovered ? "0.9" : "0.5"} />
-          <path d="M12 24C11 21 15 20 13 16" stroke="var(--accent-amber)" strokeWidth="1" strokeLinecap="round" opacity={isHovered ? "0.9" : "0.5"} />
         </svg>
+
+        {/* Small Nameplate */}
+        <span style={{
+          fontSize: "9px",
+          fontFamily: "var(--font-code)",
+          color: isHovered ? "var(--accent-amber)" : "var(--text-dim)",
+          marginTop: "-2px",
+          letterSpacing: "0.05em"
+        }}>
+          BARA // DE
+        </span>
       </div>
 
-      {/* Right Stats */}
+      {/* Right Telemetry */}
       <div style={{
         position: "absolute",
         right: "24px",
         bottom: "8px",
         fontSize: "11px",
-        color: "var(--text-muted)",
         fontFamily: "var(--font-code)",
+        color: "var(--text-dim)",
         display: "flex",
         alignItems: "center",
         gap: "12px"
       }}>
-        {petCount > 0 && (
-          <span style={{ color: "var(--accent-amber)" }}>
-            Pets: <strong>{petCount}</strong>
+        {wpm > 0 && (
+          <span>
+            Cadence: <strong style={{ color: "var(--accent-amber)" }}>{wpm}</strong> WPM
           </span>
         )}
-        <span>Speed: <strong style={{ color: "var(--text-parchment)" }}>{wpm || 0} WPM</strong></span>
-        <span>Fluency: <strong style={{ color: "var(--accent-sage)" }}>98%</strong></span>
+        <span>
+          Drill: <span style={{ color: "var(--text-parchment)" }}>{keystrokeCount}</span> chars
+        </span>
       </div>
     </div>
   );

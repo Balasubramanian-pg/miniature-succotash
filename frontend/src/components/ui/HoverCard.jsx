@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { BookOpen } from "lucide-react";
 
 export function HoverCard({ trigger, children, openDelay = 100, closeDelay = 150 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,7 +107,8 @@ export function PatternHoverCardContent({ pattern }) {
             gap: "4px"
           }}
         >
-          ● 89 Patterns Codex
+          <BookOpen size={10} />
+          <span>89 Patterns Codex</span>
         </span>
       </div>
 

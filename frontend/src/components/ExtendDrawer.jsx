@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { soundEngine } from "../audio/synthAudio";
+import { CheckCircle2, AlertCircle } from "lucide-react";
 
 export function ExtendDrawer({ question, onSaveNote }) {
   const [activeTab, setActiveTab] = useState("pyspark");
@@ -160,9 +161,22 @@ from pyspark.sql.window import Window
               <span style={{
                 fontSize: "11.5px",
                 fontFamily: "var(--font-code)",
-                color: validationResult.passed ? "var(--accent-sage)" : "var(--accent-terracotta)"
+                color: validationResult.passed ? "var(--accent-sage)" : "var(--accent-terracotta)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px"
               }}>
-                {validationResult.passed ? "✓ Logic Validated" : "Incomplete Structure"}
+                {validationResult.passed ? (
+                  <>
+                    <CheckCircle2 size={12} />
+                    <span>Logic Validated</span>
+                  </>
+                ) : (
+                  <>
+                    <AlertCircle size={12} />
+                    <span>Incomplete Structure</span>
+                  </>
+                )}
               </span>
             )}
           </div>

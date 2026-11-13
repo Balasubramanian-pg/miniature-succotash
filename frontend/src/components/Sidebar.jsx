@@ -1,6 +1,7 @@
 import React from "react";
 import { soundEngine } from "../audio/synthAudio";
 import { ProviderButtons } from "./ui/ProviderButtons";
+import { Zap, Package } from "lucide-react";
 
 export function Sidebar({
   activeTab,
@@ -80,12 +81,12 @@ export function Sidebar({
     {
       label: "DuckDB Engine",
       value: "99.9% Ready",
-      icon: "⚡"
+      icon: <Zap size={13} style={{ color: "var(--accent-amber)" }} />
     },
     {
       label: "Questions Catalog",
       value: `${repository?.total_questions || 136} Active`,
-      icon: "📦"
+      icon: <Package size={13} style={{ color: "#38bdf8" }} />
     }
   ];
 

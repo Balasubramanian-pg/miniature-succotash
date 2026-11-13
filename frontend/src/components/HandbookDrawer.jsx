@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MarkdownViewer } from "./MarkdownViewer";
 import { soundEngine } from "../audio/synthAudio";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function HandbookDrawer({ isOpen, onClose }) {
   const [patterns, setPatterns] = useState([]);
@@ -80,10 +81,11 @@ export function HandbookDrawer({ isOpen, onClose }) {
           <button
             onClick={onClose}
             className="earth-btn"
-            style={{ padding: "4px 8px", fontSize: "11px" }}
+            style={{ padding: "4px 8px", fontSize: "11px", display: "flex", alignItems: "center" }}
             title="Close Handbook (Esc)"
           >
-            ✕ Esc
+            <X size={12} style={{ marginRight: 3 }} />
+            <span>Esc</span>
           </button>
         </div>
 
@@ -93,9 +95,10 @@ export function HandbookDrawer({ isOpen, onClose }) {
             className="earth-btn"
             disabled={currentIndex <= 0}
             onClick={() => loadPatternByIndex(currentIndex - 1)}
-            style={{ opacity: currentIndex <= 0 ? 0.4 : 1, padding: "4px 10px", fontSize: "11px" }}
+            style={{ opacity: currentIndex <= 0 ? 0.4 : 1, padding: "4px 10px", fontSize: "11px", display: "flex", alignItems: "center" }}
           >
-            ← Previous
+            <ChevronLeft size={12} style={{ marginRight: 3 }} />
+            <span>Previous</span>
           </button>
           
           <span style={{ fontFamily: "var(--font-code)", fontSize: "11.5px", color: "var(--text-parchment)" }}>
@@ -106,8 +109,11 @@ export function HandbookDrawer({ isOpen, onClose }) {
             className="earth-btn"
             disabled={currentIndex >= patterns.length - 1}
             onClick={() => loadPatternByIndex(currentIndex + 1)}
-            style={{ opacity: currentIndex >= patterns.length - 1 ? 0.4 : 1, padding: "4px 10px", fontSize: "11px" }}
+            style={{ opacity: currentIndex >= patterns.length - 1 ? 0.4 : 1, padding: "4px 10px", fontSize: "11px", display: "flex", alignItems: "center" }}
           >
+            <span>Next</span>
+            <ChevronRight size={12} style={{ marginLeft: 3 }} />
+          </button>
             Next →
           </button>
 

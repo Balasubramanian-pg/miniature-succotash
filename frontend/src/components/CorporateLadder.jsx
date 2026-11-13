@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Coffee, BookOpen, ArrowRight } from "lucide-react";
 
 export function CorporateLadder({
   currentTier = "L0",
@@ -186,8 +187,8 @@ export function CorporateLadder({
 
       {/* Grounded Engineer Study Card (Bottom Left) */}
       <div className="desk-study-card">
-        <div className="desk-avatar">
-          <span style={{ fontSize: "18px" }}>☕</span>
+        <div className="desk-avatar" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Coffee size={18} style={{ color: "var(--accent-amber)" }} />
         </div>
 
         <div className="desk-info">
@@ -201,10 +202,12 @@ export function CorporateLadder({
               <button
                 onClick={onOpenHandbook}
                 className="earth-btn"
-                style={{ fontSize: "10px", padding: "1px 7px" }}
+                style={{ fontSize: "10px", padding: "1px 7px", display: "inline-flex", alignItems: "center", gap: "4px" }}
                 title="Open 89 SQL Patterns Handbook (⌘B)"
               >
-                📖 Study Codex (89) →
+                <BookOpen size={11} />
+                <span>Study Codex (89)</span>
+                <ArrowRight size={10} />
               </button>
             )}
           </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { soundEngine } from "../audio/synthAudio";
+import { CheckCircle2, XCircle } from "lucide-react";
 
 export function SoloEditor({
   question,
@@ -190,9 +191,22 @@ export function SoloEditor({
                     border: "1px solid",
                     borderColor: result.matches_expected ? "var(--accent-sage)" : "var(--accent-terracotta)",
                     color: result.matches_expected ? "var(--accent-sage)" : "var(--accent-terracotta)",
-                    background: result.matches_expected ? "var(--accent-sage-dim)" : "var(--accent-terracotta-dim)"
+                    background: result.matches_expected ? "var(--accent-sage-dim)" : "var(--accent-terracotta-dim)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px"
                   }}>
-                    {result.matches_expected ? "✓ Output Matched Expected Schema (Grade A)" : "✗ Output Mismatch"}
+                    {result.matches_expected ? (
+                      <>
+                        <CheckCircle2 size={12} />
+                        <span>Output Matched Expected Schema (Grade A)</span>
+                      </>
+                    ) : (
+                      <>
+                        <XCircle size={12} />
+                        <span>Output Mismatch</span>
+                      </>
+                    )}
                   </span>
                   <span style={{ fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)" }}>
                     {result.row_count} rows in {result.execution_ms} ms
