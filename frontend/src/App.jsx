@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import "./theme/earthly.css";
 import { Sidebar } from "./components/Sidebar";
@@ -503,3 +502,220 @@ export default function App() {
                             </h1>
                             {activeQuestion?.companies && activeQuestion.companies.length > 0 && (
                               <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", marginTop: "6px" }}>
+                                {activeQuestion.companies.map((c) => (
+                                  <span key={c} style={{ fontSize: "10px", background: "rgba(255,255,255,0.05)", color: "var(--text-muted)", padding: "1px 6px", borderRadius: "3px", fontFamily: "var(--font-code)" }}>
+                                    {c}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Input Schema Specification */}
+                          <div>
+                            <div style={{ fontFamily: "var(--font-heading)", fontSize: "12px", color: "var(--text-parchment)", fontWeight: 600, marginBottom: "8px", borderBottom: "1px solid var(--border-subtle)", paddingBottom: "4px" }}>
+                              Schema & Example Tables
+                            </div>
+                            {activeQuestion?.example_input_tables && Object.keys(activeQuestion.example_input_tables).length > 0 ? (
+                              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                                {Object.entries(activeQuestion.example_input_tables).map(([tblName, tblData]) => (
+                                  <div key={tblName} style={{ background: "var(--bg-study)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", padding: "10px" }}>
+                                    <div style={{ fontFamily: "var(--font-code)", fontSize: "11px", color: "var(--accent-amber)", marginBottom: "6px", fontWeight: 500 }}>
+                                      Table: {tblName}
+                                    </div>
+                                    <div style={{ overflowX: "auto" }}>
+                                      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", fontFamily: "var(--font-code)" }}>
+                                        <thead>
+                                          <tr>
+                                            {tblData.columns?.map((c, i) => (
+                                              <th key={i} style={{ color: "var(--text-muted)", textAlign: "left", padding: "4px 8px", borderBottom: "1px solid var(--border-subtle)" }}>
+                                                {c}
+                                              </th>
+                                            ))}
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {tblData.rows?.slice(0, 3).map((r, ri) => (
+                                            <tr key={ri}>
+                                              {tblData.columns?.map((c, ci) => (
+                                                <td key={ci} style={{ padding: "4px 8px", color: "var(--text-parchment)", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                                                  {String(r[c])}
+                                                </td>
+                                              ))}
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div style={{ fontFamily: "var(--font-code)", fontSize: "11.5px", color: "var(--text-dim)" }}>
+                                <div>in:  schema validated</div>
+                                <div>out: relational tuples</div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Problem Description Markdown */}
+                          <div>
+                            <div style={{ fontFamily: "var(--font-heading)", fontSize: "12px", color: "var(--text-parchment)", fontWeight: 600, marginBottom: "8px", borderBottom: "1px solid var(--border-subtle)", paddingBottom: "4px" }}>
+                              Problem Description
+                            </div>
+                            {activeQuestion?.question_markdown ? (
+                              <MarkdownViewer content={activeQuestion.question_markdown} />
+                            ) : (
+                              <p style={{ fontSize: "12.5px", color: "var(--text-muted)", lineHeight: 1.6 }}>
+                                {activeQuestion?.problem_statement}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Post-Solve Reflection */}
+                          {activeQuestion && (
+                            <ExtendDrawer
+                              question={activeQuestion}
+                              onSaveNote={() => {}}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Draggable Vertical Splitter Resizer */}
+                  <div
+                    className={`workspace-resizer ${isSidebarDragging ? "dragging" : ""}`}
+                    onMouseDown={() => setIsSidebarDragging(true)}
+                    title="Drag to resize problem specification (double-click to reset)"
+                    onDoubleClick={() => setSidebarWidth(420)}
+                  />
+                </>
+              )}
+
+              {/* Right Editor Workspace */}
+              <div className="workspace-right-editor">
+                
+                {/* Editor Control Toolbar with Mode Toggle Group (@reui/c-toggle-group-13) */}
+                <div
+                  style={{
+                    padding: "8px 16px",
+                    borderBottom: "1px solid var(--border-subtle)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    background: "var(--bg-desk)",
+                    flexWrap: "wrap",
+                    gap: "8px"
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    {/* Toggle Group */}
+                    <ModeToggleGroup
+                      value={editorMode}
+                      onChange={setEditorMode}
+                      onOpenExtend={() => setClankerOpen(true)}
+                    />
+
+                    {/* Prev / Next Quick Jump */}
+                    <div style={{ display: "flex", gap: "4px" }}>
+                      <button
+                        type="button"
+                        onClick={handlePrevQuestion}
+                        title="Previous Question (Ctrl+[)"
+                        className="earth-btn"
+                        style={{ fontSize: "10.5px", padding: "4px 8px" }}
+                      >
+                        ◀ Prev
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNextQuestion}
+                        title="Next Question (Ctrl+])"
+                        className="earth-btn"
+                        style={{ fontSize: "10.5px", padding: "4px 8px" }}
+                      >
+                        Next ▶
+                      </button>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)" }}>
+                    <span>DuckDB Engine Active</span>
+                    <span className="earth-shortcut-badge">⌘/ Mode</span>
+                  </div>
+                </div>
+
+                {/* Active Editor */}
+                <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+                  {editorMode === "pair" ? (
+                    <GhostEditor
+                      targetCode={activeQuestion?.canonical_solution}
+                      questionId={activeQuestion?.id}
+                      difficulty={activeQuestion?.difficulty}
+                      onComplete={handleCompleteQuestion}
+                      onKeystroke={handleKeystroke}
+                      onPasteAttempt={() => setAntiPasteOpen(true)}
+                    />
+                  ) : (
+                    <SoloEditor
+                      question={activeQuestion}
+                      onComplete={handleCompleteQuestion}
+                      onKeystroke={handleKeystroke}
+                      onPasteAttempt={() => setAntiPasteOpen(true)}
+                    />
+                  )}
+                </div>
+
+              </div>
+            </div>
+          )}
+
+        </main>
+
+        {/* Bottom Conveyor with Hand-Drawn Companion */}
+        <MascotConveyor
+          keystrokeCount={keystrokes}
+          wpm={currentWpm}
+          combo={currentCombo}
+          isTyping={true}
+        />
+      </div>
+
+      {/* Plug-and-Play Repository Connect & Profile Modal */}
+      <RepoConnectModal
+        isOpen={repoModalOpen}
+        onClose={() => setRepoModalOpen(false)}
+        onRepoUpdated={(newRepo) => {
+          setRepository(newRepo);
+          loadQuestionsAndState();
+        }}
+        onProfileUpdated={(newProfile) => {
+          setProfile(newProfile);
+        }}
+      />
+
+      {/* Post-Mortem Reflection Modal */}
+      <CompletionModal
+        isOpen={!!completionData}
+        question={activeQuestion}
+        stats={completionData}
+        completedCode={completionData?.completedCode}
+        onClose={() => setCompletionData(null)}
+        onNextQuestion={handleNextQuestion}
+      />
+
+      {/* Anti-Paste Modal & Clanker Drawer */}
+      <AntiPasteModal
+        isOpen={antiPasteOpen}
+        onClose={() => setAntiPasteOpen(false)}
+      />
+      
+      <ClankerDrawer
+        isOpen={clankerOpen}
+        onClose={() => setClankerOpen(false)}
+      />
+    </div>
+  );
+}
