@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import { MarkdownViewer } from "./MarkdownViewer";
 import { soundEngine } from "../audio/synthAudio";
@@ -108,3 +107,51 @@ export function HandbookDrawer({ isOpen, onClose }) {
             disabled={currentIndex >= patterns.length - 1}
             onClick={() => loadPatternByIndex(currentIndex + 1)}
             style={{ opacity: currentIndex >= patterns.length - 1 ? 0.4 : 1, padding: "4px 10px", fontSize: "11px" }}
+          >
+            Next →
+          </button>
+
+          {currentPattern && (
+            <span style={{
+              marginLeft: "auto",
+              fontSize: "10.5px",
+              fontFamily: "var(--font-code)",
+              color: "var(--accent-amber)",
+              background: "var(--accent-amber-dim)",
+              padding: "2px 8px",
+              borderRadius: "var(--radius-sm)"
+            }}>
+              {currentPattern.category}
+            </span>
+          )}
+        </div>
+
+        {/* Content Viewport */}
+        <div style={{ flex: 1, overflowY: "auto", paddingRight: "6px" }}>
+          {loading ? (
+            <div style={{ padding: "20px", color: "var(--text-muted)", fontSize: "12px" }}>
+              Loading pattern diagram and analysis...
+            </div>
+          ) : (
+            <div>
+              <div style={{
+                fontFamily: "var(--font-heading)",
+                fontWeight: 600,
+                fontSize: "16px",
+                color: "var(--text-parchment)",
+                marginBottom: "12px",
+                borderBottom: "1px solid var(--border-subtle)",
+                paddingBottom: "8px"
+              }}>
+                {currentPattern?.title}
+              </div>
+
+              <MarkdownViewer content={patternContent} />
+            </div>
+          )}
+        </div>
+
+      </div>
+    </>
+  );
+}
