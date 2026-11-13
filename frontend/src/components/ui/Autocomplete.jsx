@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { soundEngine } from "../../audio/synthAudio";
 
@@ -188,3 +187,85 @@ export function GroupedAutocomplete({
                 {/* Sticky Group Label */}
                 <div
                   style={{
+                    position: "sticky",
+                    top: 0,
+                    background: "rgba(22, 23, 27, 0.95)",
+                    backdropFilter: "blur(6px)",
+                    padding: "6px 12px",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    fontFamily: "var(--font-code)",
+                    color: "var(--accent-amber)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    borderBottom: "1px solid rgba(255, 255, 255, 0.04)"
+                  }}
+                >
+                  {group.category} ({group.items.length})
+                </div>
+
+                {/* Group Items */}
+                <div style={{ padding: "2px 6px" }}>
+                  {group.items.map((item) => {
+                    const isSelected = flatMatches[selectedIndex]?.id === item.id;
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => handleSelectItem(item)}
+                        onMouseEnter={() => {
+                          const idx = flatMatches.findIndex((m) => m.id === item.id);
+                          if (idx !== -1) setSelectedIndex(idx);
+                        }}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          padding: "8px 10px",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          background: isSelected ? "var(--bg-card)" : "transparent",
+                          borderLeft: isSelected ? "3px solid var(--accent-amber)" : "3px solid transparent",
+                          transition: "background 0.1s ease"
+                        }}
+                      >
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <div
+                            style={{
+                              fontSize: "12px",
+                              color: isSelected ? "var(--text-parchment)" : "#d1cbbd",
+                              fontWeight: isSelected ? 600 : 400,
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis"
+                            }}
+                          >
+                            {item.title}
+                          </div>
+                        </div>
+
+                        <span
+                          style={{
+                            fontSize: "9px",
+                            fontFamily: "var(--font-code)",
+                            color: "var(--accent-amber)",
+                            background: "rgba(217, 155, 67, 0.1)",
+                            padding: "2px 6px",
+                            borderRadius: "10px",
+                            marginLeft: "8px",
+                            flexShrink: 0
+                          }}
+                        >
+                          Codex
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
