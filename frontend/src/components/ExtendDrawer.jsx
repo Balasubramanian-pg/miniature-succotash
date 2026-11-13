@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState } from "react";
 import { soundEngine } from "../audio/synthAudio";
 
@@ -150,3 +149,69 @@ from pyspark.sql.window import Window
           </div>
 
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <button
+              onClick={handleValidatePySpark}
+              className="earth-btn earth-btn-primary"
+              style={{ padding: "4px 12px", fontSize: "11px" }}
+            >
+              Validate PySpark Logic
+            </button>
+            {validationResult && (
+              <span style={{
+                fontSize: "11.5px",
+                fontFamily: "var(--font-code)",
+                color: validationResult.passed ? "var(--accent-sage)" : "var(--accent-terracotta)"
+              }}>
+                {validationResult.passed ? "✓ Logic Validated" : "Incomplete Structure"}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Tab: Scale / Volume Reflection */}
+      {activeTab === "scale" && (
+        <div style={{ display: "grid", gap: "8px" }}>
+          <div style={{ fontSize: "12px", color: "var(--text-parchment)", lineHeight: 1.5 }}>
+            What breaks if the dataset scales from 10,000 rows to 500,000,000 rows?
+          </div>
+          <textarea
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+            placeholder="Record scale observations (e.g. data skew during GROUP BY, broadcast memory limits, partition pruning)..."
+            rows={4}
+            style={{
+              width: "100%",
+              background: "#0f1013",
+              border: "1px solid var(--border-subtle)",
+              color: "var(--text-parchment)",
+              padding: "8px",
+              fontFamily: "var(--font-code)",
+              fontSize: "11.5px",
+              borderRadius: "var(--radius-sm)",
+              outline: "none"
+            }}
+          />
+          <button
+            onClick={handleSaveNote}
+            className="earth-btn"
+            style={{ width: "fit-content", padding: "4px 12px", fontSize: "11px" }}
+          >
+            {saved ? "Saved to Progress!" : "Save Reflection Note"}
+          </button>
+        </div>
+      )}
+
+      {/* Tab: Followup Interview Probes */}
+      {activeTab === "followup" && (
+        <div style={{ fontSize: "11.5px", color: "var(--text-parchment)", lineHeight: 1.6 }}>
+          <div style={{ color: "var(--accent-amber)", fontWeight: 500, marginBottom: "4px" }}>
+            Staff Data Engineering Interview Probes:
+          </div>
+          <div>1. How do you handle late-arriving records across hourly partition boundaries?</div>
+          <div>2. Why is QUALIFY preferable to an outer WHERE filter in BigQuery/Snowflake execution plans?</div>
+        </div>
+      )}
+    </div>
+  );
+}
