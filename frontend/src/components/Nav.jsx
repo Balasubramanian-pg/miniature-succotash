@@ -118,10 +118,10 @@ export function Nav({
           fontFamily: "var(--font-code)",
           background: "var(--accent-amber-dim)",
           padding: "3px 8px",
-          borderRadius: "var(--radius-sm)"
+          borderRadius: "var(--radius-xs)"
         }}>
-          <Flame size={13} style={{ color: "#f59e0b" }} />
-          <span>{streakDays} Day Streak</span>
+          <Flame size={13} style={{ color: "var(--accent-amber)" }} />
+          <span>{streakDays} day streak</span>
         </div>
 
         {/* Dialect Selector */}

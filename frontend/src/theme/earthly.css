@@ -7,38 +7,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Warm Earthly Dark Palette */
-  --bg-study: #111215;
-  --bg-desk: #16171b;
-  --bg-card: #1c1d22;
-  --bg-card-hover: #24262d;
-  --bg-input: #131417;
+  /* unslop Neutral Warm Ramp */
+  --bg-study: #12110f;          /* Deepest surface (sidebar, nav, page backdrop) */
+  --bg-page: #161513;           /* Main content background */
+  --bg-desk: #12110f;
+  --bg-card: #1c1a18;           /* Card surface */
+  --bg-card-hover: #22201d;     /* Card hover step */
+  --bg-raised: #262421;         /* Raised surface (inputs, active states) */
+  --bg-input: #1a1816;
 
-  /* Parchment & Ink */
-  --text-parchment: #ece8e1;
-  --text-muted: #9fa2aa;
-  --text-dim: #636670;
+  /* Three Text Roles */
+  --text-primary: #efe9de;       /* Primary text */
+  --text-secondary: #aaa398;     /* Secondary text */
+  --text-muted: #8a847a;         /* Muted text & icons */
 
-  /* Natural Earth Accents */
+  /* Compatibility Aliases */
+  --text-parchment: var(--text-primary);
+  --text-dim: var(--text-muted);
+
+  /* Single Accent: Warm Amber Phosphor */
   --accent-amber: #d99b43;
-  --accent-amber-dim: rgba(217, 155, 67, 0.15);
-  --accent-terracotta: #c9624f;
-  --accent-terracotta-dim: rgba(201, 98, 79, 0.15);
-  --accent-sage: #5e9373;
-  --accent-sage-dim: rgba(94, 147, 115, 0.15);
+  --accent-amber-text: #12110f; /* High-contrast text on accent (6.2:1) */
+  --accent-amber-dim: rgba(217, 155, 67, 0.12);
+
+  /* Semantic Roles (Toned down) */
+  --accent-sage: #4cc38a;
+  --accent-terracotta: #e5484d;
   --accent-slate: #7a8294;
 
-  /* Hairline Dividers & Radii */
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  /* Quiet Hairlines */
+  --border-subtle: rgba(239, 233, 222, 0.08);
   --border-active: #d99b43;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+
+  /* Nested Radii (Tokens Scale) */
+  --radius-xs: 4px;             /* keycap, tag */
+  --radius-sm: 6px;
+  --radius-md: 8px;             /* row, input, button */
+  --radius-lg: 12px;            /* card */
+  --radius-xl: 16px;            /* panel */
 
   /* Typography */
-  --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-code: 'JetBrains Mono', monospace;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Motion: unslop single cubic-bezier easing */
+  --ease-unslop: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-base: 200ms;
 }
 
 * {
