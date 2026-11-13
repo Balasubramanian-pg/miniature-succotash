@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
 import { ProviderButtons } from "./ui/ProviderButtons";
@@ -356,3 +355,157 @@ export function RepoConnectModal({ isOpen, onClose, onRepoUpdated, onProfileUpda
                   style={{
                     padding: "8px 16px",
                     background: "transparent",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "4px",
+                    color: "var(--text-muted)",
+                    fontSize: "12px",
+                    cursor: "pointer"
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="earth-btn earth-btn-primary"
+                  style={{ padding: "8px 20px", fontSize: "12px" }}
+                >
+                  {isSubmitting ? "Connecting & Enriching..." : "Connect & Index Repository →"}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleSaveProfile} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "8px" }}>
+                <img
+                  src={profile.avatar}
+                  alt="Avatar"
+                  style={{ width: "56px", height: "56px", borderRadius: "50%", border: "2px solid var(--accent-amber)", objectFit: "cover" }}
+                />
+                <div>
+                  <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--text-parchment)" }}>
+                    {profile.name}
+                  </div>
+                  <div style={{ fontSize: "11px", color: "var(--accent-amber)", fontFamily: "var(--font-code)" }}>
+                    {profile.role}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)", marginBottom: "4px" }}>
+                  Display Name
+                </label>
+                <input
+                  type="text"
+                  value={profile.name}
+                  onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                  style={{
+                    width: "100%",
+                    background: "var(--bg-input)",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "4px",
+                    padding: "8px 12px",
+                    color: "var(--text-parchment)",
+                    fontSize: "12px",
+                    outline: "none"
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)", marginBottom: "4px" }}>
+                  Current Role / Title
+                </label>
+                <input
+                  type="text"
+                  value={profile.role}
+                  onChange={(e) => setProfile({ ...profile, role: e.target.value })}
+                  style={{
+                    width: "100%",
+                    background: "var(--bg-input)",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "4px",
+                    padding: "8px 12px",
+                    color: "var(--text-parchment)",
+                    fontSize: "12px",
+                    outline: "none"
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)", marginBottom: "4px" }}>
+                  Target Company / Ambition
+                </label>
+                <input
+                  type="text"
+                  value={profile.target_company}
+                  onChange={(e) => setProfile({ ...profile, target_company: e.target.value })}
+                  placeholder="e.g. Meta Staff DE / Databricks"
+                  style={{
+                    width: "100%",
+                    background: "var(--bg-input)",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "4px",
+                    padding: "8px 12px",
+                    color: "var(--text-parchment)",
+                    fontSize: "12px",
+                    outline: "none"
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)", marginBottom: "4px" }}>
+                  GitHub Username
+                </label>
+                <input
+                  type="text"
+                  value={profile.github_username}
+                  onChange={(e) => setProfile({ ...profile, github_username: e.target.value })}
+                  style={{
+                    width: "100%",
+                    background: "var(--bg-input)",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "4px",
+                    padding: "8px 12px",
+                    color: "var(--text-parchment)",
+                    fontSize: "12px",
+                    outline: "none"
+                  }}
+                />
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  style={{
+                    padding: "8px 16px",
+                    background: "transparent",
+                    border: "1px solid var(--border-subtle)",
+                    borderRadius: "4px",
+                    color: "var(--text-muted)",
+                    fontSize: "12px",
+                    cursor: "pointer"
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="earth-btn earth-btn-primary"
+                  style={{ padding: "8px 20px", fontSize: "12px" }}
+                >
+                  Save Profile
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
