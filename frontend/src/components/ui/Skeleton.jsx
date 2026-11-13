@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React from "react";
 
 export function Skeleton({ className = "", style = {} }) {
@@ -73,3 +72,35 @@ export function SkeletonTreeItem({ count = 5 }) {
 // Skeleton-9: Query Table Result Skeleton
 export function SkeletonTable({ rows = 4, cols = 4 }) {
   return (
+    <div style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
+      <div style={{ display: "flex", gap: "12px", background: "var(--bg-desk)", padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)" }}>
+        {Array.from({ length: cols }).map((_, i) => (
+          <Skeleton key={i} style={{ flex: 1, height: "12px" }} />
+        ))}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "12px 14px", background: "var(--bg-study)" }}>
+        {Array.from({ length: rows }).map((_, r) => (
+          <div key={r} style={{ display: "flex", gap: "12px" }}>
+            {Array.from({ length: cols }).map((_, c) => (
+              <Skeleton key={c} style={{ flex: 1, height: "10px" }} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Skeleton-10: Dashboard Stat Metric Box
+export function SkeletonStat() {
+  return (
+    <div style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", padding: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Skeleton style={{ width: "45%", height: "12px" }} />
+        <Skeleton style={{ width: "20px", height: "20px", borderRadius: "4px" }} />
+      </div>
+      <Skeleton style={{ width: "70%", height: "28px" }} />
+      <Skeleton style={{ width: "90%", height: "8px" }} />
+    </div>
+  );
+}
