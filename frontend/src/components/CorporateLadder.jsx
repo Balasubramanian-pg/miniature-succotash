@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState } from "react";
 
 export function CorporateLadder({
@@ -150,3 +149,68 @@ export function CorporateLadder({
                   {/* Clean Bookface Office Building over SWE II */}
                   {isCenterSwe2 && (
                     <div style={{
+                      position: "absolute",
+                      top: "-96px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      pointerEvents: "none"
+                    }}>
+                      <svg width="110" height="85" viewBox="0 0 110 85" fill="none">
+                        {/* Office Building Body */}
+                        <rect x="18" y="22" width="74" height="63" rx="2" fill="#1c1d22" stroke="#ece8e1" strokeWidth="1.5" />
+                        {/* Roof Sign */}
+                        <rect x="26" y="8" width="58" height="16" rx="2" fill="#16171b" stroke="#d99b43" strokeWidth="1.2" />
+                        <text x="55" y="19.5" fill="#ece8e1" fontSize="9" fontFamily="'Space Grotesk', sans-serif" fontWeight="600" textAnchor="middle">
+                          BOOKFACE
+                        </text>
+                        {/* Warm Interior Windows */}
+                        <rect x="25" y="30" width="16" height="11" rx="1" fill="#d99b43" opacity="0.3" stroke="#ece8e1" strokeWidth="0.8" />
+                        <rect x="47" y="30" width="16" height="11" rx="1" fill="#d99b43" opacity="0.7" stroke="#ece8e1" strokeWidth="0.8" />
+                        <rect x="69" y="30" width="16" height="11" rx="1" fill="#d99b43" opacity="0.3" stroke="#ece8e1" strokeWidth="0.8" />
+                        <rect x="25" y="48" width="16" height="11" rx="1" fill="#d99b43" opacity="0.7" stroke="#ece8e1" strokeWidth="0.8" />
+                        <rect x="47" y="48" width="16" height="11" rx="1" fill="#d99b43" opacity="0.3" stroke="#ece8e1" strokeWidth="0.8" />
+                        <rect x="69" y="48" width="16" height="11" rx="1" fill="#d99b43" opacity="0.7" stroke="#ece8e1" strokeWidth="0.8" />
+                      </svg>
+                    </div>
+                  )}
+
+                  <div className="step-card-title">{node.label}</div>
+                  <div className="step-card-concept">{node.concept}</div>
+                  <div className="step-card-progress">{node.progress} Completed</div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+
+      {/* Grounded Engineer Study Card (Bottom Left) */}
+      <div className="desk-study-card">
+        <div className="desk-avatar">
+          <span style={{ fontSize: "18px" }}>☕</span>
+        </div>
+
+        <div className="desk-info">
+          <div className="desk-tier-name">Career Stage: {currentTier}</div>
+          <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "1px" }}>
+            ${(100500 + xp * 50).toLocaleString()} Comp Target · {solvedCount} Solved
+          </div>
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "4px" }}>
+            <span className="desk-streak">Streak: On Track</span>
+            {onOpenHandbook && (
+              <button
+                onClick={onOpenHandbook}
+                className="earth-btn"
+                style={{ fontSize: "10px", padding: "1px 7px" }}
+                title="Open 89 SQL Patterns Handbook (⌘B)"
+              >
+                📖 Study Codex (89) →
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
+}
