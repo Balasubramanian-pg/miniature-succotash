@@ -1,4 +1,3 @@
-/* [v1.0-scaffold] Baseline style tokens and CSS variables */
 /* ==========================================================================
    RAILS Earthly & Human Design System
    A grounded, distraction-free, tactile study environment for Data Engineers.
@@ -402,3 +401,177 @@ body {
   }
   80% {
     opacity: 1;
+    transform: translateX(-50%) translateY(-24px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-36px) scale(0.95);
+  }
+}
+
+/* Bottom Conveyor with Hand-Drawn Companion */
+.study-conveyor-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--bg-desk);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.study-track-rail {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Post-Mortem Reflection Modal */
+.postmortem-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 11, 14, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.postmortem-card {
+  background: var(--bg-desk);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 620px;
+  padding: 26px 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+/* Earthly Markdown & Code Table Styles */
+.markdown-rendered-body h1,
+.markdown-rendered-body h2,
+.markdown-rendered-body h3 {
+  color: var(--text-parchment);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-rendered-body p {
+  margin: 0.6em 0;
+  line-height: 1.6;
+  color: #d1cbbd;
+}
+
+.markdown-rendered-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 11.5px;
+  font-family: var(--font-code);
+}
+
+.markdown-rendered-body th {
+  background: var(--bg-card);
+  color: var(--accent-amber);
+  font-weight: 500;
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.markdown-rendered-body td {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-parchment);
+}
+
+.markdown-rendered-body blockquote {
+  border-left: 2px solid var(--accent-amber);
+  margin: 12px 0;
+  padding-left: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.mermaid-diagram-wrap {
+  background: var(--bg-study);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin: 16px 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+/* Eradicate any Mermaid error bombs, syntax banners, or orphaned SVGs injected into DOM */
+body > [id^="dmermaid"],
+body > [id^="mermaid-error"],
+body > svg.error-icon,
+body > div:has(.error-icon),
+body > div[id^="dmermaid"],
+[id^="dmermaid"],
+[id^="mermaid-error"],
+[aria-roledescription="error"],
+.error-icon {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+}
+
+/* ReUI Keyframes & Component Animations */
+@keyframes reui-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes reui-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reui-sidebar {
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reui-tree-container ::-webkit-scrollbar,
+.reui-home-dashboard ::-webkit-scrollbar,
+.reui-modal-content ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.reui-tree-container ::-webkit-scrollbar-thumb,
+.reui-home-dashboard ::-webkit-scrollbar-thumb,
+.reui-modal-content ::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+
+
