@@ -1,0 +1,188 @@
+/* [v1.0-scaffold] Baseline style tokens and CSS variables */
+/* Minimalist Precision Styles */
+@import url("tokens.css");
+@import url("base.css");
+
+/* Clean Hairline Frame */
+.frame {
+  border: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper-2);
+  border-radius: var(--radius-card);
+}
+
+/* Subtle corner ticks */
+.ticks {
+  position: relative;
+}
+.ticks::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: var(--rule-hair) solid var(--color-rule-2);
+  -webkit-mask: conic-gradient(at var(--tick) var(--tick), transparent 75%, #000 0) 0 0 / calc(100% - var(--tick)) calc(100% - var(--tick));
+  mask: conic-gradient(at var(--tick) var(--tick), transparent 75%, #000 0) 0 0 / calc(100% - var(--tick)) calc(100% - var(--tick));
+}
+
+/* Minimalist Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 34px;
+  padding: 0 var(--space-md);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font: 500 var(--text-xs)/1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.btn:hover {
+  opacity: 0.9;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--line {
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 var(--rule-hair) var(--color-rule-2);
+}
+.btn--line:hover {
+  background: var(--color-paper-3);
+  box-shadow: inset 0 0 0 var(--rule-hair) var(--color-muted);
+}
+
+.btn--sm {
+  min-height: 28px;
+  padding: 0 var(--space-sm);
+  font-size: var(--text-xs);
+}
+
+/* Nav */
+.nav {
+  height: 52px;
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav__inner {
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-xl);
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+.wordmark__mark {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  border-radius: 1px;
+}
+
+/* Tabular Data Tables */
+.table-wrap {
+  overflow-x: auto;
+  scrollbar-color: var(--color-rule-2) var(--color-paper-2);
+}
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+.log-table th {
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-muted);
+  border-bottom: var(--rule-hair) solid var(--color-rule-2);
+  white-space: nowrap;
+}
+.log-table td {
+  padding: 6px 10px;
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-2);
+}
+.log-table tr:hover td {
+  background: var(--color-paper-3);
+  color: var(--color-ink);
+}
+
+/* Minimalist Grade Badges */
+.grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  font: 500 11px/1 var(--font-mono);
+  border: 1px solid var(--color-rule-2);
+  color: var(--color-ink);
+}
+.grade-badge--A {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(56, 189, 248, 0.1);
+}
+.grade-badge--B {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+.grade-badge--C {
+  border-color: var(--color-muted);
+  color: var(--color-muted);
+}
+.grade-badge--D {
+  border-color: var(--color-muted);
+  color: var(--color-muted);
+  opacity: 0.6;
+}
+
+/* Minimalist Markdown Content */
+.markdown-rendered-body h1,
+.markdown-rendered-body h2,
+.markdown-rendered-body h3,
+.markdown-rendered-body h4 {
+  color: var(--color-ink);
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+.markdown-rendered-body h1 { font-size: 1.25rem; }
+.markdown-rendered-body h2 { font-size: 1.05rem; border-bottom: 1px solid var(--color-rule); padding-bottom: 4px; }
+.markdown-rendered-body h3 { font-size: 0.95rem; }
+.markdown-rendered-body h4 { font-size: 0.85rem; color: var(--color-accent); font-family: var(--font-mono); }
+
+.markdown-rendered-body p {
+  margin: 0.5rem 0;
+  color: var(--color-ink-2);
+  line-height: 1.55;
+}
+
+.markdown-rendered-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0;
+  font-size: 11px;
+  font-family: var(--font-mono);
