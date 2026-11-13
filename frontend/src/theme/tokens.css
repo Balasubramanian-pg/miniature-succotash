@@ -1,4 +1,3 @@
-/* [v1.0-scaffold] Baseline style tokens and CSS variables */
 /* Minimalist Dark Precision Palette */
 :root {
   color-scheme: dark;
@@ -42,3 +41,22 @@
   --color-rule-2: rgba(255, 255, 255, 0.15);
   --rule-hair: 1px;
   --tick: 8px;
+
+  /* Single Unified Signal Accent: Calm Electric Ice-Sky */
+  --color-accent: #38bdf8;
+  --color-accent-hi: #7dd3fc;
+  --color-accent-ink: #080c14;
+  --color-focus: #38bdf8;
+  --color-error: #f87171;
+  --color-success: #34d399;
+
+  --font-display: "Geologica", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geologica", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-card: 4px;
+  --radius-pill: 999px;
+  --shadow-card: none;
+  --tracking-display: -0.02em;
+  --display-weight: 400;
+}
