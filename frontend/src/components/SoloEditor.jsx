@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect, useRef } from "react";
 import { soundEngine } from "../audio/synthAudio";
 
@@ -178,3 +177,80 @@ export function SoloEditor({
           padding: "16px 20px",
           maxHeight: "240px",
           overflowY: "auto"
+        }}>
+          {result.success ? (
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <span style={{
+                    fontSize: "11px",
+                    fontFamily: "var(--font-code)",
+                    padding: "3px 8px",
+                    borderRadius: "var(--radius-sm)",
+                    border: "1px solid",
+                    borderColor: result.matches_expected ? "var(--accent-sage)" : "var(--accent-terracotta)",
+                    color: result.matches_expected ? "var(--accent-sage)" : "var(--accent-terracotta)",
+                    background: result.matches_expected ? "var(--accent-sage-dim)" : "var(--accent-terracotta-dim)"
+                  }}>
+                    {result.matches_expected ? "✓ Output Matched Expected Schema (Grade A)" : "✗ Output Mismatch"}
+                  </span>
+                  <span style={{ fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)" }}>
+                    {result.row_count} rows in {result.execution_ms} ms
+                  </span>
+                </div>
+              </div>
+
+              {result.diff_info && (
+                <div style={{ fontSize: "11px", color: "var(--accent-terracotta)", fontFamily: "var(--font-code)", marginBottom: "8px" }}>
+                  {result.diff_info}
+                </div>
+              )}
+
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11.5px", fontFamily: "var(--font-code)" }}>
+                <thead>
+                  <tr>
+                    {result.columns.map((c, i) => (
+                      <th key={i} style={{ background: "var(--bg-card)", color: "var(--accent-amber)", textAlign: "left", padding: "6px 10px", borderBottom: "1px solid var(--border-subtle)" }}>
+                        {c}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.rows.map((r, ri) => (
+                    <tr key={ri} style={{ background: ri % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.02)" }}>
+                      {result.columns.map((c, ci) => (
+                        <td key={ci} style={{ padding: "6px 10px", borderBottom: "1px solid rgba(255, 255, 255, 0.04)", color: "var(--text-parchment)" }}>
+                          {r[c] !== null && r[c] !== undefined ? String(r[c]) : "NULL"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>
+              <span style={{ fontSize: "11px", color: "var(--accent-terracotta)", fontFamily: "var(--font-code)", fontWeight: 600 }}>
+                DuckDB Binder / Syntax Error:
+              </span>
+              <pre style={{
+                margin: "8px 0 0",
+                fontSize: "11px",
+                fontFamily: "var(--font-code)",
+                color: "var(--accent-terracotta)",
+                whiteSpace: "pre-wrap",
+                background: "#0f1013",
+                padding: "10px",
+                borderRadius: "var(--radius-sm)",
+                border: "1px solid var(--border-subtle)"
+              }}>
+                {result.error}
+              </pre>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
