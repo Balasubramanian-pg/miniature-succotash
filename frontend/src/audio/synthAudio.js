@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 // Web Audio API High-Fidelity Mechanical Keyboard & Custom Media Engine
 class SoundEngine {
   constructor() {
@@ -314,3 +313,139 @@ class SoundEngine {
 
     if (!this.wrongAudio) {
       this.initMedia();
+    }
+
+    if (this.wrongAudio) {
+      this.wrongAudio.currentTime = 0;
+      this.wrongAudio.volume = 0.95;
+      const playPromise = this.wrongAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.warn("Could not play wrong sound effect:", err);
+        });
+      }
+    }
+
+    this.playError();
+  }
+
+  stopWrongSound() {
+    if (this.wrongAudio) {
+      this.wrongAudio.pause();
+      this.wrongAudio.currentTime = 0;
+    }
+  }
+
+  // Soft ceramic bell / chime
+  playSuccessChime() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const freqs = [523.25, 659.25, 783.99]; // C5, E5, G5 warm major triad
+    freqs.forEach((f, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(f, t + idx * 0.06);
+
+      gain.gain.setValueAtTime(0.08, t + idx * 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + idx * 0.06 + 0.55);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t + idx * 0.06);
+      osc.stop(t + idx * 0.06 + 0.6);
+    });
+  }
+
+  // Subtle paper slide on drawer open
+  playDrawer() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(320, t);
+    osc.frequency.exponentialRampToValueAtTime(140, t + 0.08);
+
+    gain.gain.setValueAtTime(0.05, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(t);
+    osc.stop(t + 0.1);
+  }
+
+  // Gentle low thud on syntax mismatch
+  playError() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.frequency.setValueAtTime(95, t);
+    osc.frequency.exponentialRampToValueAtTime(30, t + 0.08);
+
+    gain.gain.setValueAtTime(0.12, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(t);
+    osc.stop(t + 0.1);
+  }
+
+  // Soft affectionate purr / chirp when petting the capybara
+  playPetPurr() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const tones = [
+      { f0: 380, f1: 520, d: 0.14, g: 0.05 },
+      { f0: 570, f1: 780, d: 0.16, g: 0.035 }
+    ];
+
+    tones.forEach((tone) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(tone.f0, t);
+      osc.frequency.exponentialRampToValueAtTime(tone.f1, t + tone.d);
+
+      gain.gain.setValueAtTime(tone.g, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + tone.d);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + tone.d + 0.02);
+    });
+  }
+}
+
+export const soundEngine = new SoundEngine();
+
+// Auto-unlock AudioContext on first user interaction
+if (typeof window !== "undefined") {
+  const unlock = () => {
+    soundEngine.init();
+    window.removeEventListener("keydown", unlock);
+    window.removeEventListener("click", unlock);
+  };
+  window.addEventListener("keydown", unlock);
+  window.addEventListener("click", unlock);
+}
