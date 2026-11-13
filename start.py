@@ -1,4 +1,3 @@
-# [v1.0-scaffold] Core architectural signatures and baseline handlers
 import os
 import sys
 import subprocess
@@ -30,3 +29,21 @@ def main():
     frontend_proc = subprocess.Popen(
         [npm_cmd, "run", "dev"],
         cwd=str(FRONTEND_DIR)
+    )
+
+    time.sleep(2)
+    print("Opening browser at http://localhost:5173 ...")
+    webbrowser.open("http://localhost:5173")
+
+    print("\nPress Ctrl+C to stop both servers.")
+    try:
+        backend_proc.wait()
+        frontend_proc.wait()
+    except KeyboardInterrupt:
+        print("\nStopping RAILS DE servers...")
+        backend_proc.terminate()
+        frontend_proc.terminate()
+        print("Done.")
+
+if __name__ == "__main__":
+    main()
