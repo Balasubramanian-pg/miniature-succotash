@@ -1,4 +1,3 @@
-/* [v1.0-scaffold] Baseline style tokens and CSS variables */
 /* Hallmark Base · The Floor */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -64,3 +63,32 @@ h4 { font-size: var(--text-md); font-weight: 400; }
 }
 
 p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  font-feature-settings: "tnum" 1;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
