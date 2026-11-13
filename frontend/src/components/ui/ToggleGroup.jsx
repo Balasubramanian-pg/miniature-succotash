@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React from "react";
 import { soundEngine } from "../../audio/synthAudio";
 
@@ -80,3 +79,38 @@ export function ModeToggleGroup({ value, onChange, onOpenExtend }) {
               display: "flex",
               alignItems: "center",
               gap: "6px",
+              padding: "5px 10px",
+              borderRadius: "6px",
+              fontSize: "11px",
+              fontFamily: "var(--font-code)",
+              fontWeight: isActive ? 600 : 400,
+              color: isActive ? "var(--text-parchment)" : "var(--text-muted)",
+              background: isActive ? "var(--bg-card)" : "transparent",
+              border: isActive ? "1px solid var(--accent-amber)" : "1px solid transparent",
+              boxShadow: isActive ? "0 2px 8px rgba(0,0,0,0.4)" : "none",
+              cursor: "pointer",
+              transition: "all 0.15s ease",
+              whiteSpace: "nowrap"
+            }}
+          >
+            <span style={{ color: isActive ? "var(--accent-amber)" : "var(--text-dim)", display: "flex" }}>
+              {m.icon}
+            </span>
+            <span>{m.label}</span>
+            <span
+              style={{
+                fontSize: "9px",
+                padding: "1px 5px",
+                borderRadius: "4px",
+                background: isActive ? "rgba(217, 155, 67, 0.18)" : "rgba(255, 255, 255, 0.04)",
+                color: isActive ? "var(--accent-amber)" : "var(--text-dim)"
+              }}
+            >
+              {m.badge}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
