@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useMemo } from "react";
 import { soundEngine } from "../../audio/synthAudio";
 
@@ -286,3 +285,127 @@ export function QuestionTree({
                     }}
                   >
                     {group.items.length}
+                  </span>
+                </div>
+
+                {/* Folder Children (Questions) */}
+                {isExpanded && (
+                  <div
+                    style={{
+                      marginLeft: "14px",
+                      paddingLeft: "8px",
+                      borderLeft: "1px solid var(--border-subtle)",
+                      marginTop: "2px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "2px"
+                    }}
+                  >
+                    {group.items.map((q) => {
+                      const isSel = activeQuestion?.id === q.id;
+                      const isSolved = q.progress?.status === "completed" || q.user_progress?.status === "completed";
+                      const grade = q.progress?.grade || q.user_progress?.grade;
+
+                      return (
+                        <div
+                          key={q.id}
+                          onClick={() => {
+                            soundEngine.playKeyClick();
+                            onSelectQuestion(q);
+                          }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            padding: "5px 8px",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            background: isSel ? "var(--bg-card)" : "transparent",
+                            borderLeft: isSel ? "2px solid var(--accent-amber)" : "2px solid transparent",
+                            transition: "background 0.1s ease"
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!isSel) e.currentTarget.style.background = "rgba(255, 255, 255, 0.03)";
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!isSel) e.currentTarget.style.background = "transparent";
+                          }}
+                        >
+                          {/* Status Icon */}
+                          <span style={{ fontSize: "11px", flexShrink: 0 }}>
+                            {isSolved ? (
+                              <span style={{ color: "#10b981", fontWeight: 700 }}>✓</span>
+                            ) : (
+                              <span style={{ color: "var(--text-dim)", opacity: 0.6 }}>•</span>
+                            )}
+                          </span>
+
+                          {/* Title */}
+                          <span
+                            style={{
+                              flex: 1,
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              fontSize: "11px",
+                              color: isSel ? "var(--text-parchment)" : isSolved ? "#94a3b8" : "var(--text-muted)",
+                              fontWeight: isSel ? 600 : 400
+                            }}
+                            title={q.title}
+                          >
+                            {q.title}
+                          </span>
+
+                          {/* LeetCode ID Pill if enriched */}
+                          {q.leetcode_id && (
+                            <span
+                              style={{
+                                fontSize: "8.5px",
+                                color: "var(--accent-amber)",
+                                background: "rgba(217, 155, 67, 0.1)",
+                                padding: "1px 4px",
+                                borderRadius: "3px",
+                                flexShrink: 0
+                              }}
+                            >
+                              LC #{q.leetcode_id}
+                            </span>
+                          )}
+
+                          {/* Difficulty Initial */}
+                          <span
+                            style={{
+                              fontSize: "8.5px",
+                              textTransform: "uppercase",
+                              padding: "1px 4px",
+                              borderRadius: "3px",
+                              flexShrink: 0,
+                              background:
+                                q.difficulty === "easy"
+                                  ? "rgba(16, 185, 129, 0.12)"
+                                  : q.difficulty === "medium"
+                                  ? "rgba(217, 155, 67, 0.15)"
+                                  : "rgba(239, 68, 68, 0.15)",
+                              color:
+                                q.difficulty === "easy"
+                                  ? "#10b981"
+                                  : q.difficulty === "medium"
+                                  ? "var(--accent-amber)"
+                                  : "#ef4444"
+                            }}
+                          >
+                            {q.difficulty ? q.difficulty[0] : "E"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
