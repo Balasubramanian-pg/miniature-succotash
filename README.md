@@ -43,6 +43,63 @@ Instead of passively reading solutions or copying code with AI, you build real m
 - **Unguided Solving**: Clean code editor with full problem requirements, schema inspector, and mock data tables.
 - **In-Memory DuckDB**: Automatically creates and registers mock tables from Markdown files and executes your query live (< 50ms).
 - **Deep Output Diff**: Verifies row counts, column names, column order, and values against expected output.
+- **Authentic Grading**: Awards Grade A (fast, 100% correct, no crutches), Grade B, or Grade C.
 
+### 6. The Corporate Ladder (Progression System)
+Climb from the bottom up to the top of the data hierarchy:
+- **L0: Unemployed (Mom's School of Life)** — Starting baseline with dry remarks on failures.
+- **L1: Junior Data Analyst / Intern** — Early-stage startup ($15/hr). Basic WHERE, single joins, GROUP BY.
+- **L2: Associate Data Engineer** — MidCorp Enterprise. CTEs, self-joins, basic PySpark schemas.
+- **L3: SWE 2 / DE @ Bookface** — Meta tier. Advanced window functions (LEAD, LAG, DENSE_RANK), running totals, churn.
+- **L4: Senior Data Engineer / Staff** — Unicorn tier. Gaps & islands, cumulative rolling metrics, distributed shuffle optimization.
+- **L5: Distinguished Architect @ Rock Corp** — Bar-raiser FAANG challenges.
+- **L6: Absolute Data God** — Untouchable mastery. Solving complex medium/hard problems in minutes.
 
-<!-- [v1.0 Architecture Scaffold] -->
+### 7. Synthesized & Real Mechanical Switch Audio
+- Tactile mechanical switch click audio on every keystroke with real recorded micro-samples and Web Audio API fallback.
+- Harmonic victory music on query success and defeat buzzer on syntax/grading errors.
+- Quick 1-click **MUTE** toggle in the persistent navigation bar.
+
+### 8. Anti-Cheat (Anti-Paste Enforcement)
+- Detects `Ctrl+V` and clipboard paste events in the editor.
+- Blocks pasting immediately with a Hallmark-styled alert: *"No shortcuts allowed. Build manual muscle memory."*
+
+### 9. "Extend the Tutorial" Post-Solve Drawer
+- **PySpark Translation Tab**: Shows the equivalent query in the PySpark DataFrame API.
+- **1-Billion Row Reflection**: Evaluates broadcast join opportunities, GROUP BY data skew, and partition pruning.
+- **Interviewer Follow-ups**: Realistic interviewer follow-up questions for deeper understanding.
+
+---
+
+## Architecture & Tech Stack
+
+- **Design Systems**: Hallmark **Vantage**, **1980s Anime Retro**, and **Earthly Warm**
+- **Frontend**: React 18 + Vite 6 + Tailwind CSS
+- **Backend**: Python 3.13 + FastAPI + Uvicorn + DuckDB
+- **UI Components**: ReUI component library (`@reui/c-autocomplete-8`, `@reui/c-sidebar-2`, `@reui/c-tree-3`, `@reui/c-hover-card-3`, `@reui/c-toggle-group-13`)
+- **Audio Engine**: Dual-layer Web Audio API synthesizer + low-latency HTML5 Audio buffers
+
+---
+
+## Quick Start
+
+### Option 1: Double-click `start.bat`
+Double-click `start.bat` to automatically start both the backend on `http://127.0.0.1:8001` and frontend on `http://localhost:5173`.
+
+### Option 2: Python Launcher
+```powershell
+python start.py
+```
+
+### Option 3: Manual Startup
+```powershell
+# Terminal 1: Backend
+cd backend
+python -m uvicorn server:app --host 127.0.0.1 --port 8001 --reload
+
+# Terminal 2: Frontend
+cd frontend
+npm run dev
+```
+
+Visit **`http://localhost:5173`** and enjoy muscle-memory data engineering mastery!
