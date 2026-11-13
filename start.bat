@@ -1,0 +1,3 @@
+@echo off
+echo Starting RAILS DE (Scaffold Mode)...
+cd backend && python -m uvicorn server:app --host 127.0.0.1 --port 8001
