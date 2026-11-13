@@ -24,6 +24,7 @@ ENV/
 # DuckDB / SQLite local databases if any
 *.duckdb
 *.db
+backend/rails_repository.json
 
 # Vite & IDE
 .vite/
