@@ -1,4 +1,3 @@
-# [v1.0-scaffold] Core architectural signatures and baseline handlers
 import os
 import re
 import yaml
@@ -143,3 +142,81 @@ def parse_question_file(filepath: Path):
     elif diff == "medium":
         tier = "L3"
         tier_name = "SWE 2 / DE @ Bookface"
+    else:
+        tier = "L5"
+        tier_name = "Distinguished Architect @ Rock Corp"
+
+    return {
+        "id": filepath.stem,
+        "filename": filepath.name,
+        "difficulty": diff,
+        "tier": tier,
+        "tier_name": tier_name,
+        "title": title,
+        "frontmatter": frontmatter,
+        "question_markdown": question_markdown,
+        "example_input_tables": input_tables,
+        "example_output_tables": output_tables,
+        "solutions": solutions,
+        "canonical_solution": canonical_sql,
+        "walkthrough": solutions_text
+    }
+
+def get_all_questions():
+    questions = []
+    for diff in ["Easy", "Medium", "Hard"]:
+        dir_path = QUESTIONS_DIR / diff
+        if not dir_path.exists():
+            continue
+        for f in dir_path.glob("*.md"):
+            content = f.read_text(encoding="utf-8", errors="replace")
+            fm, body = parse_frontmatter(content)
+            title_match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
+            title = title_match.group(1).strip() if title_match else f.stem
+            
+            diff_clean = diff.lower()
+            tier = "L1" if diff_clean == "easy" else ("L3" if diff_clean == "medium" else "L5")
+            
+            questions.append({
+                "id": f.stem,
+                "filename": f.name,
+                "difficulty": diff_clean,
+                "tier": tier,
+                "title": title,
+                "companies": fm.get("companies", []),
+                "tags": fm.get("tags", []),
+                "pattern": fm.get("pattern", []),
+                "status": fm.get("status", "not-started")
+            })
+    return questions
+
+def get_all_patterns():
+    patterns = []
+    if not PATTERNS_DIR.exists():
+        return patterns
+    for f in PATTERNS_DIR.rglob("*.md"):
+        content = f.read_text(encoding="utf-8", errors="replace")
+        fm, body = parse_frontmatter(content)
+        title_match = re.search(r"^#\s+(.+)$", body, re.MULTILINE)
+        title = title_match.group(1).strip() if title_match else f.stem
+        category = f.parent.name if f.parent != PATTERNS_DIR else "General"
+        patterns.append({
+            "id": f.stem,
+            "filename": f.name,
+            "category": category,
+            "title": title,
+            "relative_path": str(f.relative_to(PATTERNS_DIR)),
+            "tags": fm.get("tags", [])
+        })
+    return patterns
+
+if __name__ == "__main__":
+    sample_file = QUESTIONS_DIR / "Easy" / "Amazon - Top 5 Revenue Product Categories for Q1.md"
+    parsed = parse_question_file(sample_file)
+    print("Parsed Title:", parsed["title"])
+    print("Input Tables:", list(parsed["example_input_tables"].keys()))
+    print("Output Tables:", list(parsed["example_output_tables"].keys()))
+    print("Solutions Found:", len(parsed["solutions"]))
+    for s in parsed["solutions"]:
+        print(" -", s["label"], f"({s['language']})")
+    print("\nCanonical Solution preview:\n", parsed["canonical_solution"][:150])
