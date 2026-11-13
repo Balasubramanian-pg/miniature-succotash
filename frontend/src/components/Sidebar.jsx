@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React from "react";
 import { soundEngine } from "../audio/synthAudio";
 import { ProviderButtons } from "./ui/ProviderButtons";
@@ -265,3 +264,118 @@ export function Sidebar({
                     <span
                       style={{
                         fontSize: "9.5px",
+                        fontFamily: "var(--font-code)",
+                        background: "rgba(217, 155, 67, 0.15)",
+                        color: "var(--accent-amber)",
+                        padding: "1px 6px",
+                        borderRadius: "10px"
+                      }}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </>
+              )}
+            </button>
+          );
+        })}
+
+        {/* Live Monitors Section */}
+        {!isCollapsed && (
+          <div style={{ marginTop: "20px", padding: "0 6px" }}>
+            <div style={{ fontSize: "10px", fontFamily: "var(--font-code)", color: "var(--text-dim)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>
+              Active Environment
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {monitors.map((m) => (
+                <div
+                  key={m.label}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "6px 8px",
+                    background: "rgba(255, 255, 255, 0.02)",
+                    borderRadius: "4px",
+                    border: "1px solid rgba(255, 255, 255, 0.04)",
+                    fontSize: "11px",
+                    fontFamily: "var(--font-code)"
+                  }}
+                >
+                  <span style={{ color: "var(--text-dim)", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span>{m.icon}</span> {m.label}
+                  </span>
+                  <span style={{ color: "var(--accent-amber)", fontWeight: 500 }}>{m.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer: User Account Profile + Social Provider Buttons */}
+      <div
+        style={{
+          padding: isCollapsed ? "10px 4px" : "12px 14px",
+          borderTop: "1px solid var(--border-subtle)",
+          background: "rgba(17, 18, 21, 0.8)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px"
+        }}
+      >
+        {/* User Profile Tile */}
+        <div
+          onClick={onOpenProfile}
+          title="Account Profile & Repository Settings"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: isCollapsed ? "center" : "flex-start",
+            gap: "10px",
+            cursor: "pointer",
+            borderRadius: "6px",
+            padding: isCollapsed ? "4px" : "4px 6px",
+            transition: "background 0.15s ease"
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.04)")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+        >
+          <img
+            src={profile?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=96&h=96&dpr=2&q=80"}
+            alt="Profile Avatar"
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50%",
+              border: "1px solid var(--accent-amber)",
+              objectFit: "cover",
+              flexShrink: 0
+            }}
+          />
+
+          {!isCollapsed && (
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-parchment)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {profile?.name || "Nadia Rahman"}
+              </div>
+              <div style={{ fontSize: "10px", color: "var(--accent-amber)", fontFamily: "var(--font-code)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {profile?.role || "Staff Data Engineer"}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Brand Social Action Buttons (@reui/c-button-36) */}
+        {!isCollapsed && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "4px" }}>
+            <ProviderButtons onSelectProvider={(providerId) => onOpenRepo && onOpenRepo(providerId)} />
+            <span style={{ fontSize: "9px", fontFamily: "var(--font-code)", color: "var(--text-dim)" }}>
+              v2.4 Prod
+            </span>
+          </div>
+        )}
+      </div>
+    </aside>
+  );
+}
