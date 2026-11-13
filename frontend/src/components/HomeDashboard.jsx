@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState, useEffect } from "react";
 import { soundEngine } from "../audio/synthAudio";
 import { SkeletonCard, SkeletonStat } from "./ui/Skeleton";
@@ -407,3 +406,178 @@ export function HomeDashboard({
           <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
             <button
               type="button"
+              onClick={() => {
+                soundEngine.playKeyClick();
+                if (onSelectQuestion && recommended_question) {
+                  onSelectQuestion(recommended_question);
+                }
+                onOpenWorkspace();
+              }}
+              className="earth-btn earth-btn-primary"
+              style={{ flex: 1, padding: "10px 16px", fontSize: "12px", justifyContent: "center" }}
+            >
+              Start Practice in Workspace ⌘K →
+            </button>
+          </div>
+        </div>
+
+        {/* Recommendation 2: Pattern Recommendation */}
+        <div
+          style={{
+            background: "var(--bg-card)",
+            border: "1px solid var(--border-subtle)",
+            borderRadius: "var(--radius-md)",
+            padding: "22px 24px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between"
+          }}
+        >
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+              <span
+                style={{
+                  fontSize: "10.5px",
+                  fontFamily: "var(--font-code)",
+                  textTransform: "uppercase",
+                  color: "var(--accent-amber)",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em"
+                }}
+              >
+                📖 Recommended Pattern
+              </span>
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontFamily: "var(--font-code)",
+                  color: "var(--text-dim)"
+                }}
+              >
+                Codex Architectural Strategy
+              </span>
+            </div>
+
+            <h3
+              style={{
+                fontFamily: "var(--font-heading)",
+                fontSize: "18px",
+                fontWeight: 600,
+                color: "var(--text-parchment)",
+                margin: "0 0 10px",
+                lineHeight: 1.3
+              }}
+            >
+              {recommended_pattern?.title || "Calculating Funnel Conversion Rates"}
+            </h3>
+
+            <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
+              <span style={{ fontSize: "11px", background: "rgba(217, 155, 67, 0.12)", color: "var(--accent-amber)", padding: "2px 8px", borderRadius: "4px", fontFamily: "var(--font-code)" }}>
+                Category: {recommended_pattern?.category || "Advanced Analytics"}
+              </span>
+              <span style={{ fontSize: "11px", background: "rgba(255, 255, 255, 0.05)", color: "var(--text-muted)", padding: "2px 8px", borderRadius: "4px", fontFamily: "var(--font-code)" }}>
+                Flowchart Architecture Ready
+              </span>
+            </div>
+
+            <p style={{ fontSize: "12.5px", color: "var(--text-dim)", lineHeight: 1.6, margin: 0 }}>
+              Mastering this pattern unblocks multi-stage sessionization and user drop-off queries commonly asked at DoorDash, Uber, and Meta.
+            </p>
+          </div>
+
+          <div style={{ marginTop: "20px" }}>
+            <button
+              type="button"
+              onClick={() => {
+                soundEngine.playKeyClick();
+                onOpenHandbook();
+              }}
+              style={{
+                width: "100%",
+                padding: "10px 16px",
+                background: "rgba(255, 255, 255, 0.04)",
+                border: "1px solid var(--border-subtle)",
+                borderRadius: "var(--radius-sm)",
+                color: "var(--text-parchment)",
+                fontSize: "12px",
+                fontFamily: "var(--font-code)",
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "var(--accent-amber)";
+                e.currentTarget.style.color = "var(--accent-amber)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--border-subtle)";
+                e.currentTarget.style.color = "var(--text-parchment)";
+              }}
+            >
+              Inspect Pattern Architecture in Handbook ⌘B →
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Quick Launch & Recent Practice Bar */}
+      <div
+        style={{
+          background: "rgba(17, 18, 21, 0.6)",
+          border: "1px solid var(--border-subtle)",
+          borderRadius: "var(--radius-md)",
+          padding: "20px 24px"
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <h4 style={{ margin: 0, fontFamily: "var(--font-heading)", fontSize: "15px", fontWeight: 600, color: "var(--text-parchment)" }}>
+            Recent Practice Activity
+          </h4>
+          <span style={{ fontSize: "11px", color: "var(--text-dim)", fontFamily: "var(--font-code)" }}>
+            Solo Recall vs Paired Typer
+          </span>
+        </div>
+
+        {recent_solved && recent_solved.length > 0 ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {recent_solved.map((item) => (
+              <div
+                key={item.id}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px 14px",
+                  background: "var(--bg-card)",
+                  borderRadius: "6px",
+                  border: "1px solid rgba(255,255,255,0.04)"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <span style={{ color: "#10b981", fontSize: "14px" }}>✓</span>
+                  <span style={{ fontSize: "12.5px", color: "var(--text-parchment)", fontWeight: 500 }}>
+                    {item.title}
+                  </span>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "11px", fontFamily: "var(--font-code)" }}>
+                  <span style={{ color: "var(--accent-amber)" }}>Grade {item.grade}</span>
+                  <span style={{ color: "var(--text-dim)", textTransform: "capitalize" }}>{item.mode} Mode</span>
+                  {item.wpm > 0 && <span style={{ color: "var(--text-muted)" }}>{item.wpm} WPM</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ textAlign: "center", padding: "20px", color: "var(--text-dim)", fontSize: "12px", fontFamily: "var(--font-code)" }}>
+            No questions solved yet. Jump into the workspace to tackle your first challenge!
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
