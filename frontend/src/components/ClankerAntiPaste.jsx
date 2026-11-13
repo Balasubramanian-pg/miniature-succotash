@@ -1,4 +1,3 @@
-/** [v1.0-scaffold] Initial Component Architecture **/
 import React, { useState } from "react";
 
 export function AntiPasteModal({ isOpen, onClose }) {
@@ -84,3 +83,40 @@ export function ClankerDrawer({ isOpen, onClose }) {
             fontFamily: "var(--font-code)",
             fontSize: "11px",
             color: "var(--accent-amber)"
+          }}>
+            🤖 Clanker (2B LLM)
+          </span>
+        </div>
+        <button
+          className="earth-btn"
+          onClick={askClanker}
+          disabled={loading}
+          style={{ fontSize: "11px", padding: "2px 10px" }}
+        >
+          {loading ? "Thinking..." : "Consult Clanker"}
+        </button>
+      </div>
+
+      {advice && (
+        <div style={{
+          marginTop: "10px",
+          padding: "10px",
+          background: "#131417",
+          border: "1px solid var(--border-subtle)",
+          borderRadius: "var(--radius-sm)"
+        }}>
+          <p style={{
+            fontFamily: "var(--font-code)",
+            fontSize: "11.5px",
+            color: "var(--text-parchment)",
+            margin: 0,
+            lineHeight: 1.5,
+            fontStyle: "italic"
+          }}>
+            "{advice}"
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
